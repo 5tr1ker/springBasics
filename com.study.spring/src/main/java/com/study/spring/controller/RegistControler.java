@@ -27,9 +27,9 @@ public class RegistControler {
 	}
 	
 	@RequestMapping(value = "/confirmRegist" , method = RequestMethod.POST )
-	public String confirmRegist(@Valid @ModelAttribute("formData")idpasswordHelper iph , Errors error) {
+	public String confirmRegist( @Valid @ModelAttribute("formData")idpasswordHelper iph , Errors error) {
+		
 		if(error.hasErrors()) {
-			
 			List<FieldError> errorList = error.getFieldErrors();
 			// System.out.println("에러가 존재한다 : " + error.getFieldError().getDefaultMessage());
 			// System.out.println("에러가 존재한다 : " + error.getFieldErrors());
@@ -38,14 +38,18 @@ public class RegistControler {
             });
 			return "/WEB-INF/view/regist.jsp";
 		}
-		
 		try {
 			MemberVO vo = new MemberVO(iph.getUserId() , iph.getUserPw());
 			dao.insert(vo);
 			return "/WEB-INF/view/home.jsp";
 		} catch(Exception e) {
-			error.rejectValue("email", "duplicate");
 			return "/WEB-INF/view/home.jsp";
 		}
 	}
+	
+//	@InitBinder
+//    public void initBinder(WebDataBinder binder) {
+//        binder.setValidator(new idpasswordValidator());
+//    }
+	
 }
