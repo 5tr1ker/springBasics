@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,9 +24,9 @@ public class HomeController {
 	}
 	
 	//@GetMapping("/home")
-	@RequestMapping(value = "/home/{id}" , method = RequestMethod.GET)
-	public String hello(Model model, @RequestParam(value="name" , required = false) String name , @PathVariable("id")int id ) {
-		model.addAttribute("greeting" , "안녕하세요" + name + "아이디 : " + id );
+	@RequestMapping(value = "/home" , method = RequestMethod.GET) // /home/{id}
+	public String hello(Model model, @RequestParam(value="name" , required = false) String name /* , @PathVariable("id")int id */) {
+		model.addAttribute("greeting" , "안녕하세요" + name );
 		return "/WEB-INF/view/home.jsp";
 	}
 	

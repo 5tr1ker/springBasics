@@ -26,16 +26,21 @@ public class RegistControler {
 		this.dao = dao;
 	}
 	
+	
+	
 	@RequestMapping(value = "/confirmRegist" , method = RequestMethod.POST )
-	public String confirmRegist( @Valid @ModelAttribute("formData")idpasswordHelper iph , Errors error) {
+	public String confirmRegist(@Valid @ModelAttribute("formData")idpasswordHelper iph , Errors error) {
 		
 		if(error.hasErrors()) {
 			List<FieldError> errorList = error.getFieldErrors();
+			
 			// System.out.println("에러가 존재한다 : " + error.getFieldError().getDefaultMessage());
+			// InitBinder의 경우 getFieldError().getCode() 를 사용
 			// System.out.println("에러가 존재한다 : " + error.getFieldErrors());
 			errorList.forEach(fieldError->{
-                System.out.println("bind error" + fieldError.getObjectName() + " 필드명 : "+ fieldError.getField() + " 에러명 : "+ fieldError.getDefaultMessage());
-            });
+                // System.out.println("bind error" + fieldError.getObjectName() + " 필드명 : "+ fieldError.getField() + " 에러명 : "+ fieldError.getDefaultMessage());
+				System.out.println(" 에러명 : "+ fieldError.getDefaultMessage());
+			});
 			return "/WEB-INF/view/regist.jsp";
 		}
 		try {

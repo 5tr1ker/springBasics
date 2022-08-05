@@ -7,11 +7,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class idpasswordHelper {
 	
-	@NotBlank(message = "공백은 허용하지 않습니다.")
-	@Size(min = 1)
+	@NotBlank(message= "{userId.notempty}")
+	@Size(min = 1 , message = "{size.underachiever}")
 	String userId;
-	@NotEmpty(message = "공백은 허용하지 않습니다.")
-	@Size(min = 1)
+	@NotEmpty(message="{userPw.notempty}")
+	@Size(min = 1 , message = "{size.underachiever}")
 	String userPw;
 	
 	public String getUserId() {
