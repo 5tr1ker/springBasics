@@ -61,7 +61,7 @@ public class HomeController {
 		if(vo == null) {
 			model.addAttribute("idData" , "찾을 수 없는 아이디");
 		} else {
-			model.addAttribute("idData" , vo.getUserPw());
+			model.addAttribute("idData" , vo.getUserName());
 		}
 		model.addAttribute("findResult" , data);
 		return "/WEB-INF/view/findid.jsp";
