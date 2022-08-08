@@ -10,11 +10,14 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
 
-            <property name="hibernate.show_sql" value="true"/>
+            <!--  <property name="hibernate.show_sql" value="true"/> -->
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments"  value="true"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <property name="hibernate.hbm2ddl.auto" value="create" /><!-- 자동으로 테이블을 생성해준다. -->
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" /> <!-- Java SQL 이름 표기법을 매핑해준다. ex) sql role_type -> Java roleType -->
+        	<property name="hibernate.id.new_generator_mappings" value="true" /><!-- sql 키값 할당 전략 -->
         </properties>
+        
     </persistence-unit>
 
 </persistence>
