@@ -9,7 +9,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import com.study.spring.base.AgencyVO;
+import com.study.spring.base.ItemVO;
 import com.study.spring.base.MemberVO;
+import com.study.spring.base.OrderData;
+import com.study.spring.base.OrderId;
 
 public class program {
 	
@@ -45,6 +48,27 @@ public class program {
 		MemberVO mvo2 = new MemberVO("id2" , "진상박" , 54); // 팀원 2
 		mvo2.setAgency(avo); // 팀 설정
 		em.persist(mvo2);
+		
+		// --------------- 다대다 연관관계 -----------------------
+		// -- 식별 방법 --
+		ItemVO item1 = new ItemVO("Gasolin");
+		item1.setOrderID("Gasolin");
+		
+		OrderData order = new OrderData();
+		order.setMvo(mvo);
+		order.setItemvo(item1);
+		
+		em.persist(order); // 다대다 연관 관계
+		
+		OrderId oid = new OrderId();
+		oid.setItemvo("Gasolin"); // 다대다 데이터 찾기
+		oid.setMvo("id1"); // 두개 모두 참조해야함
+		
+		OrderData oidFind = em.find(OrderData.class , oid);
+		MemberVO mvoResult = oidFind.getMvo();
+		ItemVO itemvioResult = oidFind.getItemvo();
+		
+		System.out.println("[다대다 연관관계 결과] 고객명 :  " + mvoResult.getUserName() + " 물품 명 :  " + itemvioResult.getItemName());
 		
 //		mvo2.setAgency(avo2); // 팀 수정
 		

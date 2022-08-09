@@ -1,6 +1,7 @@
 package com.study.spring.base;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -11,11 +12,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
@@ -47,21 +46,26 @@ public class MemberVO {
 	public enum RoleType {
 		ADMIN , USER
 	}
+	
+	@OneToMany(mappedBy = "mvo")
+	List<OrderData> orders = new ArrayList<OrderData>();
+	
+	@ManyToOne()
+	@JoinColumn(name="Agency_Name") // 외래키가 저장될 장소
+	private AgencyVO agency; // Member 다 : 1 Agency
 
 	@Transient //임시로 저장되는 DB에 저장되지 않음
 	private String temporary;
 	
-	@Temporal(TemporalType.TIMESTAMP) // 날짜를 매핑한다.
-	private Date createDate; // 가입날짜
 	
-	@Lob	// BLOB ( String ) , CLOB ( Byte ) 속성
-	private String description; // 설명
-	
-	@ManyToOne()
-	@JoinColumn(name="Agency_Name") // 외래키가 저장될 장소
-	private AgencyVO agency;
-	
-	
+	public List<OrderData> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<OrderData> orders) {
+		this.orders = orders;
+	}
+
 	public MemberVO(String userId , String userName , Integer age) {
 		this.userId = userId;
 		this.userName = userName;
@@ -133,22 +137,6 @@ public class MemberVO {
 
 	public void setTemporary(String temporary) {
 		this.temporary = temporary;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	
