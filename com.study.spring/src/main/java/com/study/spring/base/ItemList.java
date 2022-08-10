@@ -1,11 +1,17 @@
 package com.study.spring.base;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.study.spring.base.item.foodItem;
 
 @Entity
-public class ItemVO {
+public class ItemList {
 
 	@Id @Column(name="ORDER_ID")
 	private String orderID;
@@ -13,10 +19,22 @@ public class ItemVO {
 	@Column(name="ITEM_NAME")
 	private String ItemName;
 	
-	public ItemVO() {
+	@ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	@JoinColumn(name = "FOOD_LIST")
+	private foodItem foodit;
+	
+	public foodItem getFoodit() {
+		return foodit;
+	}
+
+	public void setFoodit(foodItem foodit) {
+		this.foodit = foodit;
+	}
+
+	public ItemList() {
 	}
 	
-	public ItemVO(String item) {
+	public ItemList(String item) {
 		ItemName = item;
 	}
 	

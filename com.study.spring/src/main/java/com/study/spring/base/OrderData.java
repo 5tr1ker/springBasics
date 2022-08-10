@@ -1,6 +1,7 @@
 package com.study.spring.base;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -10,13 +11,13 @@ import javax.persistence.ManyToOne;
 @IdClass(OrderId.class)
 public class OrderData {
 	
-	@Id @ManyToOne 
+	@Id @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID")
 	private MemberVO mvo;
 
-	@Id @ManyToOne
+	@Id @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORDER_NUM") // 각 키 값
-	private ItemVO itemvo;
+	private ItemList itemvo;
 
 	public MemberVO getMvo() {
 		return mvo;
@@ -26,11 +27,11 @@ public class OrderData {
 		this.mvo = mvo;
 	}
 
-	public ItemVO getItemvo() {
+	public ItemList getItemvo() {
 		return itemvo;
 	}
 
-	public void setItemvo(ItemVO itemvo) {
+	public void setItemvo(ItemList itemvo) {
 		this.itemvo = itemvo;
 	}
 

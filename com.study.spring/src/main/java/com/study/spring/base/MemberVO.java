@@ -5,17 +5,18 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -24,7 +25,16 @@ import javax.persistence.UniqueConstraint;
 		columnNames = {"NAME" , "AGE"})
 }) // 생략시 클래스 명으로 엔티티 조회 
 @Access(AccessType.FIELD) // AccessType.FIELD JPA가 필드에 직접 접근한다. AccessType.PROPERTY -> Getter Setter 로 접근한다.
-public class MemberVO {
+@AttributeOverrides({
+	@AttributeOverride(name = "joinTime" , column = @Column(name= "JOIN_TIME")) ,
+	@AttributeOverride(name = "position" , column = @Column(name= "POSITION"))
+})
+public class MemberVO extends comonData {
+	
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)	sql이 AUTO_INCREASE 일때 사용 DB에 자동 생성된 키값을 사용
+	@Id	// 기본키 ( 식별자 필드 )
+	@Column(name="ID") // 해당 DB 테이블 연결
+	private String userId;
 
 	@Column(name="AGE")
 	private int age; // column이 없으면 변수명으로 연결
@@ -32,32 +42,16 @@ public class MemberVO {
 	@Column(name="NUMBER") @GeneratedValue
 	private int number;
 	
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)	sql이 AUTO_INCREASE 일때 사용 DB에 자동 생성된 키값을 사용
-	@Id	// 기본키 ( 식별자 필드 )
-	@Column(name="ID") // 해당 DB 테이블 연결
-	private String userId;
-	
 	@Column(name="NAME" , nullable = false , length = 10) // 제약조건 추가
 	private String userName;
 	
-	@Enumerated(EnumType.STRING) // 사용자의 타입 ( 사용자 , 어드민 )
-	private RoleType roleType;
-	
-	public enum RoleType {
-		ADMIN , USER
-	}
-	
-	@OneToMany(mappedBy = "mvo")
+	@OneToMany(mappedBy = "mvo" , cascade = CascadeType.ALL)
 	List<OrderData> orders = new ArrayList<OrderData>();
 	
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY) // 지연 로딩
 	@JoinColumn(name="Agency_Name") // 외래키가 저장될 장소
 	private AgencyVO agency; // Member 다 : 1 Agency
 
-	@Transient //임시로 저장되는 DB에 저장되지 않음
-	private String temporary;
-	
-	
 	public List<OrderData> getOrders() {
 		return orders;
 	}
@@ -123,21 +117,4 @@ public class MemberVO {
 		this.userName = userName;
 	}
 
-	public RoleType getRoleType() {
-		return roleType;
-	}
-
-	public void setRoleType(RoleType roleType) {
-		this.roleType = roleType;
-	}
-
-	public String getTemporary() {
-		return temporary;
-	}
-
-	public void setTemporary(String temporary) {
-		this.temporary = temporary;
-	}
-
-	
 }

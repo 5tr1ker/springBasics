@@ -30,7 +30,7 @@ public class AgencyVO {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date posttime;
 	
-	@OneToMany(mappedBy = "agency") // 양방향 맵핑으로 추가 ( 상대방의 필드 값 ) 
+	@OneToMany(mappedBy="agency") // 양방향 맵핑으로 추가 ( 상대방의 필드 값 ) 
 	private List<MemberVO> member = new ArrayList<MemberVO>();
 	
 	public AgencyVO(String agency) {
