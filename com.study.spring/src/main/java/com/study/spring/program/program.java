@@ -1,6 +1,7 @@
 package com.study.spring.program;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,6 +14,8 @@ import com.study.spring.base.ItemList;
 import com.study.spring.base.MemberVO;
 import com.study.spring.base.OrderData;
 import com.study.spring.base.OrderId;
+import com.study.spring.base.familyInfo;
+import com.study.spring.base.userInfo;
 import com.study.spring.base.item.foodItem;
 
 public class program {
@@ -46,9 +49,9 @@ public class program {
 		mvo.setAgency(avo); // 팀 설정
 		em.persist(mvo);
 		
-		MemberVO mvo2 = new MemberVO("id2" , "진상박" , 54); // 팀원 2
-		mvo2.setAgency(avo); // 팀 설정
-		em.persist(mvo2);
+		//MemberVO mvo2 = new MemberVO("id2" , "진상박" , 54); // 팀원 2
+		//mvo2.setAgency(avo); // 팀 설정
+		//em.persist(mvo2);
 		
 		// --------------- 다대다 연관관계 -----------------------
 		// -- 식별 방법 --
@@ -58,8 +61,6 @@ public class program {
 		OrderData order = new OrderData();
 		order.setMvo(mvo);
 		order.setItemvo(item1);
-		
-		OrderData order2 = new OrderData();
 		
 		em.persist(order); // 다대다 연관 관계
 		
@@ -85,6 +86,26 @@ public class program {
 		
 		System.out.println("[영속성 전이]" + findResult_foodItem.getMaker());
 		
+//		---- 값 타입 ----
+		mvo.setUserInfo(new userInfo("사우동" , 40 , "대학생")); // 일반 값 객체 생성
+		mvo.getFamilyInfo().add(new familyInfo("김은정" , "여" , 50)); // 값 타입 컬렉션
+		mvo.getFamilyInfo().add(new familyInfo("박현종" , "남" , 53));
+		mvo.getFamilyInfo().add(new familyInfo("박철진" , "남" , 26));
+		
+		em.persist(mvo);
+		
+		MemberVO resultmvo_datatype = em.find(MemberVO.class , "id1");
+		userInfo ino = resultmvo_datatype.getUserInfo();
+		List<familyInfo> fif = resultmvo_datatype.getFamilyInfo();
+		System.out.printf("[값 타입] 거주지 : %s , 나이 : %d , 직업 : %s\n" , ino.getAddress() , ino.getFamily() , ino.getJob());
+		
+		for(familyInfo fn : fif) {
+			System.out.printf("[값 타입] 이름 : %s , 성별 : %s , 나이 : %d\n" , fn.getName() , fn.getSex() , fn.getAge());
+		}
+
+		// 조회
+		
+		
 		// ---- 데이터 찾기 ----
 		OrderId oid = new OrderId();
 		oid.setItemvo("Gasolin"); // 다대다 데이터 찾기
@@ -98,7 +119,6 @@ public class program {
 		
 		
 //		mvo2.setAgency(avo2); // 팀 수정
-		
 //		mvo2.setAgency(null); 연관관계 제거
 //		mvo.setAgency(null);
 //		em.remove(avo2); 삭제할때는 모든 연관관계를 제거해야함

@@ -8,7 +8,10 @@ import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,6 +44,18 @@ public class MemberVO extends comonData {
 	
 	@Column(name="NUMBER") @GeneratedValue
 	private int number;
+	
+	@Embedded	// 값 타입
+	private userInfo userInfo;
+	
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "FAMILY_INFO" , joinColumns = @JoinColumn(name = "ID"))
+	@AttributeOverrides({ // 같은 값이 있을 때 Attribute 로 이름을 바꿀 수 있다.
+		@AttributeOverride(name = "name" , column = @Column(name = "FAMILY_NAME")) , 
+		@AttributeOverride(name = "sex" , column = @Column(name = "FAMILY_SEX")) , 
+		@AttributeOverride(name = "age" , column = @Column(name = "FAMILY_AGE"))
+	})
+	private List<familyInfo> familyInfo = new ArrayList<familyInfo>();
 	
 	@Column(name="NAME" , nullable = false , length = 10) // 제약조건 추가
 	private String userName;
@@ -115,6 +130,22 @@ public class MemberVO extends comonData {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public userInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(userInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public List<familyInfo> getFamilyInfo() {
+		return familyInfo;
+	}
+
+	public void setFamilyInfo(List<familyInfo> familyInfo) {
+		this.familyInfo = familyInfo;
 	}
 
 }

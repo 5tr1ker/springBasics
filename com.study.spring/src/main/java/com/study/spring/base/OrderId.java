@@ -3,6 +3,7 @@ package com.study.spring.base;
 import java.io.Serializable;
 import java.util.Objects;
 
+@SuppressWarnings("serial")
 public class OrderId implements Serializable {
 
 	private String mvo;
