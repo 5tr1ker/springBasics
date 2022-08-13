@@ -1,19 +1,28 @@
 package com.study.spring.program;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
+import org.h2.command.dml.Update;
+
+import com.mysema.query.dml.UpdateClause;
+import com.mysema.query.jpa.impl.JPADeleteClause;
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.jpa.impl.JPAUpdateClause;
+import com.mysema.query.types.Projections;
 import com.study.spring.base.AgencyVO;
 import com.study.spring.base.ItemList;
+import com.study.spring.base.MemberDTO;
 import com.study.spring.base.MemberVO;
 import com.study.spring.base.OrderData;
 import com.study.spring.base.OrderId;
+import com.study.spring.base.QMemberVO;
 import com.study.spring.base.familyInfo;
 import com.study.spring.base.userInfo;
 import com.study.spring.base.item.foodItem;
@@ -49,9 +58,13 @@ public class program {
 		mvo.setAgency(avo); // 팀 설정
 		em.persist(mvo);
 		
-		//MemberVO mvo2 = new MemberVO("id2" , "진상박" , 54); // 팀원 2
-		//mvo2.setAgency(avo); // 팀 설정
-		//em.persist(mvo2);
+		MemberVO mvo2 = new MemberVO("id2" , "진상박" , 54); // 팀원 2
+		mvo2.setAgency(avo); // 팀 설정
+		em.persist(mvo2);
+		
+		MemberVO mvo3 = new MemberVO("id3" , "주히주히" , 23); // 팀원 2
+		mvo3.setAgency(avo); // 팀 설정
+		em.persist(mvo3);
 		
 		// --------------- 다대다 연관관계 -----------------------
 		// -- 식별 방법 --
@@ -94,6 +107,7 @@ public class program {
 		
 		em.persist(mvo);
 		
+		// 조회
 		MemberVO resultmvo_datatype = em.find(MemberVO.class , "id1");
 		userInfo ino = resultmvo_datatype.getUserInfo();
 		List<familyInfo> fif = resultmvo_datatype.getFamilyInfo();
@@ -103,8 +117,85 @@ public class program {
 			System.out.printf("[값 타입] 이름 : %s , 성별 : %s , 나이 : %d\n" , fn.getName() , fn.getSex() , fn.getAge());
 		}
 
-		// 조회
+		// ---- QueryDSL
+
 		
+		// C:\Users\tjseo\git\springBasics\com.study.spring
+		JPAQuery query = new JPAQuery(em);
+		QMemberVO qmvo = QMemberVO.memberVO; // 별칭사용
+		//QMemberVO qmvo = QMemberVO.memberVO; // QMember에 지정한 별칭 사용 ( 기본 인스턴트)
+		//QMemberVO qmvo = new QMemberVO("m"); 직접 지정
+		
+		/*
+		List<MemberDTO> results_DTO = query.from(qmvo).list(Projections.bean(MemberDTO.class , qmvo.userName.as("userName") , qmvo.userId.as("userId")));
+		
+		for(MemberDTO aa : results_DTO) {
+			System.out.println("[QueryDSL] 빈 생성 id : " + aa.getUserId() + " userName : " + aa.getUserName());
+		}
+		*/
+		JPAUpdateClause juc = new JPAUpdateClause(em , qmvo);
+		long count = juc.where(qmvo.userId.eq("id3")).set(qmvo.userName , "주희").execute(); // 수정
+		
+		JPADeleteClause jdc = new JPADeleteClause(em, qmvo);
+		long count2 = jdc.where(qmvo.userId.eq("id32")).execute();
+
+		List<MemberVO> deleteupdateResult = query.from(qmvo).list(qmvo);
+		for(MemberVO a2a2 : deleteupdateResult) {
+			System.out.println("[수정 삭제 결과] 아이디 : " + a2a2.getUserId() + " 이름 : " + a2a2.getUserName());
+		}
+		
+		// 벌크 연산
+		em.createQuery("update MemberVO m set m.age = m.age + 1").executeUpdate();
+		TypedQuery<MemberVO> result1 = em.createQuery("select m from MemberVO m" , MemberVO.class);
+		List<MemberVO> get = result1.getResultList();
+		
+		em.refresh(mvo);
+		for(MemberVO a2a2 : get) {
+			System.out.println("[벌크 연산] 아이디 : " + a2a2.getUserId() + " 이름 : " + a2a2.getUserName() + " 나이 : " + a2a2.getAge());
+		}
+		
+		/*
+		SearchResults<MemberVO> results = query.from(qmvo).where(qmvo.userId.eq("id1")).listResults(qmvo);
+		
+		System.out.println("\n[QueryDSL]총 조회된 데이터 갯수 : " + results.getTotal());
+		List<MemberVO> resultsmvo = results.getResults(); // 결과 반환
+		
+		for(MemberVO dl : resultsmvo) {
+			System.out.println("[QueryDSL]"+ dl.getAge() + "살의 이름은" + dl.getUserName());
+		}
+		
+		
+		QAgencyVO qgen = QAgencyVO.agencyVO;
+		*/
+		// -- 조인 ----
+//		List<MemberVO> joinresult = query.from(qgen).join(qgen.member , qmvo).list(qmvo);
+//		
+//		for(MemberVO aaww : joinresult) {
+//			System.out.println("[QueryDSL 조인] 유저이름 : " + aaww.getUserName() + " 아이디 : " + aaww.getUserId());
+//		}
+//		
+//		List<AgencyVO> joinresult2 = query.from(qgen)
+//				.leftJoin(qgen.member , qmvo).fetch()
+//				//.on(qmvo.userId.eq("id1"))
+//				.list(qgen);
+//		
+//		
+//		for(AgencyVO aaww : joinresult2) {
+//			List<MemberVO> result_member = aaww.getMember();
+//			for(MemberVO aawaa : result_member) {
+//				System.out.println("[QueryDSL 조인] 아이디 : " + aawaa.getUserId() + " 이름 : " + aawaa.getUserName());
+//			}
+//			System.out.println("[QueryDSL 조인] 유저이름 : " + aaww.getUserId() + " 별칭 : " + aaww.getAgency());
+//		}
+		
+		/* 서브 쿼리
+		List<AgencyVO> result_sub = query
+				.from(qgen)
+				.where(
+						qgen.agency.eq(new JPASubQuery()
+								.from(qgen)
+								.unique("AVANTE_CN7"))).list;
+								*/
 		
 		// ---- 데이터 찾기 ----
 		OrderId oid = new OrderId();
