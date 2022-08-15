@@ -1,8 +1,6 @@
 package springJPA.base;
 
 
-import java.util.Objects;
-
 import javax.persistence.Embeddable;
 
 // 값 타입
@@ -10,12 +8,10 @@ import javax.persistence.Embeddable;
 public class userInfo {
 
 	private String address;
-	private Integer familycount;
 	private String job;
 	
-	public userInfo(String address , Integer familycount , String job) {
+	public userInfo(String address , String job) {
 		this.address = address;
-		this.familycount = familycount;
 		this.job = job;
 	}
 	
@@ -23,10 +19,16 @@ public class userInfo {
 		
 	}
 	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(address, familycount, job);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((job == null) ? 0 : job.hashCode());
+		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -36,21 +38,24 @@ public class userInfo {
 		if (getClass() != obj.getClass())
 			return false;
 		userInfo other = (userInfo) obj;
-		return Objects.equals(address, other.address) && Objects.equals(familycount, other.familycount)
-				&& Objects.equals(job, other.job);
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (job == null) {
+			if (other.job != null)
+				return false;
+		} else if (!job.equals(other.job))
+			return false;
+		return true;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public Integer getFamily() {
-		return familycount;
-	}
-	public void setFamily(Integer familycount) {
-		this.familycount = familycount;
 	}
 	public String getJob() {
 		return job;

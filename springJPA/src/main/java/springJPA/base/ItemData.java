@@ -13,19 +13,27 @@ public class ItemData {
 
 	@Id @GeneratedValue
 	@Column(name = "ITEMNUMBER")
-	private long Number;
+	private Integer Number;
 	
 	@Column(name = "ITEMNAME")
 	private String Name;
 	
 	@Column(name = "COUNT")
 	private int count;
+	
+	// 생성 메소드 
+	public static ItemData createitem(String name , int count) {
+		ItemData id = new ItemData();
+		id.setName(name);
+		id.setCount(count);
+		return id;
+	}
 
-	public long getNumber() {
+	public Integer getNumber() {
 		return Number;
 	}
 
-	public void setNumber(long number) {
+	public void setNumber(Integer number) {
 		Number = number;
 	}
 

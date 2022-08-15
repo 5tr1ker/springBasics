@@ -7,9 +7,7 @@ import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import springJPA.exception.NotEnoughStockException;
 
 @Entity
 @Table(name = "MEMBER")
@@ -41,9 +41,32 @@ public class Member extends comonData {
 	@Embedded
 	private userInfo userInfo;
 	
-	@ElementCollection
-	@CollectionTable(name = "FAMILY_INFO" , joinColumns = @JoinColumn(name = "USERID"))
-	private List<familyInfo> familyinfo = new ArrayList<familyInfo>();
+//	@ElementCollection
+//	@CollectionTable(name = "FAMILY_INFO" , joinColumns = @JoinColumn(name = "USERID"))
+//	private List<familyInfo> familyinfo = new ArrayList<familyInfo>();
+
+	@Column(name = "TOTAL_ORDER")
+	private int totalOrder; // 비지니스 모델 ( 총 구매 수 )
+	
+	// 비지니스 모델
+	public void addtotalorder(int quantity) {
+		this.totalOrder += quantity;
+	}
+	public void removetotalorder(int quantity) throws NotEnoughStockException {
+		int resttotal = totalOrder;
+		if(resttotal - quantity < 0) {
+			throw new NotEnoughStockException();
+		}
+		this.totalOrder -= quantity;
+	}
+	
+	public int getTotalOrder() {
+		return totalOrder;
+	}
+
+	public void setTotalOrder(int totalOrder) {
+		this.totalOrder = totalOrder;
+	}
 
 	public String getID() {
 		return ID;
@@ -77,13 +100,4 @@ public class Member extends comonData {
 		this.userInfo = userInfo;
 	}
 
-	public List<familyInfo> getFamilyinfo() {
-		return familyinfo;
-	}
-
-	public void setFamilyinfo(List<familyInfo> familyinfo) {
-		this.familyinfo = familyinfo;
-	}
-
-	
 }
