@@ -1,13 +1,12 @@
 package springJPA.repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import springJPA.base.OrderData;
 
+public interface orderRepository extends JpaRepository<OrderData, Long>{
+	
+}
+/*
 @Repository
 @Transactional
 public class orderRepository {
@@ -31,3 +30,4 @@ public class orderRepository {
 //		return em.createQuery("select o from ORDER o join o.mvo m on m.USERID = o.ID where m.USERID = :username" , OrderData.class).setParameter("username", username).getResultList();
 //	}
 }
+*/

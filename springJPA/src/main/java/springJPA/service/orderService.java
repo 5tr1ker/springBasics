@@ -21,7 +21,7 @@ public class orderService {
 	public long order(String userid , String itemname , int count) {
 		
 		// 엔티티 조회
-		Member mv = mrs.findone(userid);
+		Member mv = mrs.findOne(userid);
 		OrderData od = new OrderData();
 		
 		ItemData itemid = ItemData.createitem(itemname, count); // 생성 메소드 활용

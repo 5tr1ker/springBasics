@@ -1,7 +1,5 @@
 package springJPA.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +25,8 @@ public class memberService {
 	}
 	
 	public boolean CheckID(String ID) {
-		List<Member> mb = mRepos.findMember(ID);
-		if(mb.isEmpty()) {
+		Member mb = mRepos.findOne(ID);
+		if(mb == null) {
 			return true;
 		} else {
 			return false;

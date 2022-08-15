@@ -20,8 +20,8 @@ public class itemService {
 		irs.save(id);
 	}
 	
-	public ItemData finditem(String id) {
-		return irs.finditem(id);
+	public ItemData finditem(int id) {
+		return irs.findOne(id);
 	}
 	
 	public List<ItemData> findAll() {

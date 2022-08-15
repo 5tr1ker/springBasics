@@ -62,7 +62,7 @@ public class test {
 		member.setID("박상진");
 		String id = ms.join(member);
 		
-		Member mv = mr.findone(id);
+		Member mv = mr.findOne(id);
 		System.out.println("조회된 아이디: " + mv.getID());
 		
 		long orderid = os.order(id, "2018 BMW M5", 500);

@@ -1,14 +1,13 @@
 package springJPA.repository;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import springJPA.base.ItemData;
 
+public interface itemRepository extends JpaRepository<ItemData, Integer> {
+}
+
+/*
 @Repository
 public class itemRepository {
 
@@ -31,3 +30,4 @@ public class itemRepository {
 		return em.find(ItemData.class , id);
 	}
 }
+*/

@@ -1,14 +1,15 @@
 package springJPA.repository;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import springJPA.base.Member;
 
+public interface memberRepository extends JpaRepository<Member, String> {
+}
+
+// JpaRepository는 Save findall find를 제공하기 떄문에 삭제
+
+/*
 @Repository
 public class memberRepository {
 
@@ -31,3 +32,4 @@ public class memberRepository {
 		return em.createQuery("select m from Member m where m.id = :username" , Member.class).setParameter("username", id).getResultList();
 	}
 }
+*/
