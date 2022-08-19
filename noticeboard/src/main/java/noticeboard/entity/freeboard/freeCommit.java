@@ -5,6 +5,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,8 +20,8 @@ public class freeCommit extends postBaseEntity {
 	@Id @GeneratedValue
 	private long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "FREE_POST" , nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	@JoinColumn(name = "POST_NUMBER" , nullable = false)
 	private freepost freepost;
 
 	public freepost getFreepost() {

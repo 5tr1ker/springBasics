@@ -17,8 +17,12 @@ public class profileSetting {
 	@Column(name = "PHONE")
 	private String phone;
 
+	@Column(name = "OPTION1")
+	private int option1;
 	
-
+	@Column(name = "OPTION2")
+	private int option2;
+	
 	public long getProfileNumber() {
 		return profileNumber;
 	}
@@ -41,6 +45,22 @@ public class profileSetting {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public int getOption1() {
+		return option1;
+	}
+
+	public void setOption1(int option1) {
+		this.option1 = option1;
+	}
+
+	public int getOption2() {
+		return option2;
+	}
+
+	public void setOption2(int option2) {
+		this.option2 = option2;
 	}
 	
 	

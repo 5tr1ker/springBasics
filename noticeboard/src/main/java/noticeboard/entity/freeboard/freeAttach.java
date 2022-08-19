@@ -12,14 +12,16 @@ public class freeAttach {
 
 	@Id @GeneratedValue
 	private long id;
+	
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = false , name="POST_NUMBER")
 	private freepost freepost;
 	
 	@Column(nullable = false , length = 30)
 	private String filename;
 	@Column(nullable = false , length = 40)
 	private String file;
+	
 	
 	public String getFilename() {
 		return filename;

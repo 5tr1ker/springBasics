@@ -36,8 +36,12 @@ public class idinfo {
 	@JoinColumn(name = "PROFILE_SETTING")
 	private profileSetting profileSetting;
 	
-	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	private List<freepost> freepost = new ArrayList<freepost>();
+	
+	public void setProfileSetting(profileSetting profileSetting) {
+		this.profileSetting = profileSetting;
+	}
 	
 	public String getId() {
 		return id;
@@ -67,8 +71,12 @@ public class idinfo {
 		return profileSetting;
 	}
 
-	public void setProfileSetting(profileSetting profileSetting) {
-		this.profileSetting = profileSetting;
+	public List<freepost> getFreepost() {
+		return freepost;
+	}
+
+	public void setFreepost(List<freepost> freepost) {
+		this.freepost = freepost;
 	}
 	
 	

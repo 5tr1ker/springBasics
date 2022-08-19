@@ -11,10 +11,10 @@ import javax.persistence.ManyToOne;
 public class freePostTagAssociation {
 	
 	@Id @GeneratedValue
-	private long number;
+	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "POSTNUMBER")
+	@JoinColumn(name = "POST_NUMBER")
 	private freepost freepostAssociation;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -22,15 +22,11 @@ public class freePostTagAssociation {
 	private freeTag freetagAssociation;
 
 	public long getNumber() {
-		return number;
+		return id;
 	}
 
 	public freepost getFreepostAssociation() {
 		return freepostAssociation;
-	}
-
-	public void setFreepostAssociation(freepost freepostAssociation) {
-		this.freepostAssociation = freepostAssociation;
 	}
 
 	public freeTag getFreetagAssociation() {
@@ -42,7 +38,7 @@ public class freePostTagAssociation {
 	}
 
 	public void setNumber(long number) {
-		this.number = number;
+		this.id = number;
 	}
 
 	public freepost getFreepost() {
@@ -59,6 +55,18 @@ public class freePostTagAssociation {
 
 	public void setFreetag(freeTag freetagAssociation) {
 		this.freetagAssociation = freetagAssociation;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setFreepostAssociation(freepost freepostAssociation) {
+		this.freepostAssociation = freepostAssociation;
 	}
 
 	

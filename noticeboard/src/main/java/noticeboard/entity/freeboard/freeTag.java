@@ -22,6 +22,12 @@ public class freeTag {
 	@OneToMany(mappedBy = "freepostAssociation" , fetch = FetchType.LAZY)
 	private List<freePostTagAssociation> freepost = new ArrayList<freePostTagAssociation>();
 
+	// 연관관계 편의 메소드
+	public void addFreePost(freePostTagAssociation freepost) {
+		this.freepost.add(freepost);
+		freepost.setFreetag(this);
+	}
+	
 	public String getTagData() {
 		return tagData;
 	}
@@ -34,6 +40,7 @@ public class freeTag {
 		return freepost;
 	}
 
+	
 	public void setFreepost(List<freePostTagAssociation> freepost) {
 		this.freepost = freepost;
 	}

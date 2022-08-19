@@ -46,8 +46,32 @@ public class freepost extends postBaseEntity {
 	private List<freeCommit> freeCommit = new ArrayList<freeCommit>();
 	
 	@ElementCollection
-	@CollectionTable(name = "FREE_WHOLIKE" , joinColumns = @JoinColumn(name = "POSTNUMBER"))
+	@CollectionTable(name = "FREE_RECOMMENDER" , joinColumns = @JoinColumn(name = "POSTNUMBER"))
 	private Set<freeWhoLike> freewholike = new HashSet<freeWhoLike>();
+	
+
+	// 연관관계 편의 메소드 시작
+	public void setIdinfo(idinfo idinfo) {
+		if(this.idinfo != null) {
+			this.idinfo.getFreepost().remove(this);
+		}
+		this.idinfo = idinfo;
+		idinfo.getFreepost().add(this);
+	}
+	
+	public void addFreeAttach(freeAttach attach) {
+		freeAttach.add(attach);
+		attach.setFreepost(this);
+	}
+	public void addFreeCommit(freeCommit commit) {
+		freeCommit.add(commit);
+		commit.setFreepost(this);
+	}
+	public void addTagAssociation(freePostTagAssociation association) {
+		freetag.add(association);
+		association.setFreepost(this);
+	}
+	// 연관관계 편의 메소드 종료
 	
 	public long getNumbers() {
 		return numbers;
@@ -88,9 +112,8 @@ public class freepost extends postBaseEntity {
 	public idinfo getIdinfo() {
 		return idinfo;
 	}
-	public void setIdinfo(idinfo idinfo) {
-		this.idinfo = idinfo;
-	}
+	
+	
 	public List<freePostTagAssociation> getFreetag() {
 		return freetag;
 	}
