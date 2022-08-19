@@ -2,7 +2,6 @@ package noticeboard.entity.freeboard;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +19,7 @@ public class freeCommit extends postBaseEntity {
 	@Id @GeneratedValue
 	private long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "POST_NUMBER" , nullable = false)
 	private freepost freepost;
 

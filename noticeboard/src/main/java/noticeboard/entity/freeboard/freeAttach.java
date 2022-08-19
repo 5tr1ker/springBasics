@@ -2,6 +2,7 @@ package noticeboard.entity.freeboard;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,7 +14,7 @@ public class freeAttach {
 	@Id @GeneratedValue
 	private long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false , name="POST_NUMBER")
 	private freepost freepost;
 	

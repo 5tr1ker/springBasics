@@ -32,11 +32,11 @@ public class idinfo {
 	@CreationTimestamp
 	private Date joindate;
 	
-	@OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROFILE_SETTING")
 	private profileSetting profileSetting;
 	
-	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	private List<freepost> freepost = new ArrayList<freepost>();
 	
 	public void setProfileSetting(profileSetting profileSetting) {

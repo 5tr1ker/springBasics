@@ -13,12 +13,13 @@ public class freePostTagAssociation {
 	@Id @GeneratedValue
 	private long id;
 	
+	// 필수적 비식별 관계
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "POST_NUMBER")
+	@JoinColumn(name = "POST_NUMBER" , nullable = false)
 	private freepost freepostAssociation;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "TAGDATA")
+	@JoinColumn(name = "TAGDATA" , nullable = false)
 	private freeTag freetagAssociation;
 
 	public long getNumber() {

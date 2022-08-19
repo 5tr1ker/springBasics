@@ -19,7 +19,7 @@ public class freeTag {
 	@Column(nullable = false , length = 15)
 	private String tagData;
 	
-	@OneToMany(mappedBy = "freepostAssociation" , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "freepostAssociation" , fetch = FetchType.LAZY , orphanRemoval = true)
 	private List<freePostTagAssociation> freepost = new ArrayList<freePostTagAssociation>();
 
 	// 연관관계 편의 메소드

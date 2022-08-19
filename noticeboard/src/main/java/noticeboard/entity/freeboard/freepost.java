@@ -1,14 +1,10 @@
 package noticeboard.entity.freeboard;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,20 +32,18 @@ public class freepost extends postBaseEntity {
 	@JoinColumn(name = "ID_INFO" , nullable = false)
 	private idinfo idinfo;
 	
-	@OneToMany(mappedBy = "freetagAssociation" , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "freetagAssociation" , fetch = FetchType.LAZY , orphanRemoval = true)
 	private List<freePostTagAssociation> freetag = new ArrayList<freePostTagAssociation>();
 	
-	@OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "freepost")
+	@OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "freepost" , orphanRemoval = true)
 	private List<freeAttach> freeAttach = new ArrayList<freeAttach>();
 	
-	@OneToMany(mappedBy = "freepost" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "freepost" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	private List<freeCommit> freeCommit = new ArrayList<freeCommit>();
 	
-	@ElementCollection
-	@CollectionTable(name = "FREE_RECOMMENDER" , joinColumns = @JoinColumn(name = "POSTNUMBER"))
-	private Set<freeWhoLike> freewholike = new HashSet<freeWhoLike>();
+	@OneToMany(mappedBy = "freepost" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	private List<freeWhoLike> freewholike = new ArrayList<freeWhoLike>();
 	
-
 	// 연관관계 편의 메소드 시작
 	public void setIdinfo(idinfo idinfo) {
 		if(this.idinfo != null) {
@@ -70,6 +64,10 @@ public class freepost extends postBaseEntity {
 	public void addTagAssociation(freePostTagAssociation association) {
 		freetag.add(association);
 		association.setFreepost(this);
+	}
+	public void addWhoLike(freeWhoLike wholike) {
+		freewholike.add(wholike);
+		wholike.setFreepost(this);
 	}
 	// 연관관계 편의 메소드 종료
 	
@@ -132,11 +130,13 @@ public class freepost extends postBaseEntity {
 	public void setFreeCommit(List<freeCommit> freeCommit) {
 		this.freeCommit = freeCommit;
 	}
-	public Set<freeWhoLike> getFreewholike() {
+
+	public List<freeWhoLike> getFreewholike() {
 		return freewholike;
 	}
-	public void setFreewholike(Set<freeWhoLike> freewholike) {
-		this.freewholike = freewholike;
+	public void setFreewholike(List<freeWhoLike> wholike) {
+		this.freewholike = wholike;
 	}
 	
+
 }

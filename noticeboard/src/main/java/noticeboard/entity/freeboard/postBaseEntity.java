@@ -10,7 +10,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 
 @MappedSuperclass
-public class postBaseEntity {
+abstract class postBaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	private Date posttime;
