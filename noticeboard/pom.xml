@@ -210,7 +210,10 @@
 					<uriEncoding>UTF-8</uriEncoding>
 				</configuration>
 			</plugin>
-
+			<plugin>
+			  <artifactId>maven-war-plugin</artifactId>
+			  <version>3.2.2</version>
+			</plugin>
 <!--
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
