@@ -17,15 +17,22 @@ public class loginController {
 
 	@Autowired loginService login;
 	
-	@RequestMapping(value ="/test" , method = RequestMethod.GET)
-	public String test() {
-		return "Test Data";
-	}
-	
 	@RequestMapping(value = "/register" , method = RequestMethod.POST)
 	public int register(@RequestBody Map<String, String> userinfo) {
-		System.out.println(userinfo.toString());
 		int result = login.register(userinfo);
+		return result;
+	}
+	
+	@RequestMapping(value = "/login" , method = RequestMethod.POST)
+	public int login(@RequestBody Map<String , String> userinfo) {
+		int result = login.login(userinfo);
+		return result;
+	}
+	
+	@RequestMapping(value = "/findId" , method = RequestMethod.PUT)
+	public String findId(@RequestBody String userinfo) {
+		String result = login.findId(userinfo);
+		System.out.println(result);
 		return result;
 	}
 }

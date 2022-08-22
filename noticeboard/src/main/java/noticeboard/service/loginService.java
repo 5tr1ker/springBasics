@@ -27,4 +27,21 @@ public class loginService {
 		loginRepository.save(idinfo_data);
 		return 1;
 	}
+	
+	public int login(Map<String , String> userInfo) {
+		idinfo result = loginRepository.findOne(userInfo.get("id"));
+		if(result == null || !result.getPassword().equals(userInfo.get("pw"))) {
+			return -1;
+		}
+		
+		return 1;
+	}
+
+	public String findId(String userinfo) {
+		idinfo result = loginRepository.findOne(userinfo);
+		if(result == null) return "-1";
+		
+		String password = result.getPassword();
+		return password.substring( 0 , password.length() - (password.length() - 3));
+	}
 }
