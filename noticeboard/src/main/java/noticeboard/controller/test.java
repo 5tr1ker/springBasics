@@ -12,8 +12,9 @@ public class test {
 		return "NewFile";
 	}
 	
-	@RequestMapping(value = "/" , method = RequestMethod.GET)
+	@RequestMapping(value = "/")
 	public String home2() {
+		System.out.println("home2 에 대한 요청");
 		return "NewFile";
 	}
 }

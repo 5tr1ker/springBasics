@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import noticeboard.entity.freeboard.freepost;
+import noticeboard.entity.freeboard.freePost;
 
 @Entity
 public class idinfo {
@@ -36,8 +35,17 @@ public class idinfo {
 	@JoinColumn(name = "PROFILE_SETTING")
 	private profileSetting profileSetting;
 	
-	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
-	private List<freepost> freepost = new ArrayList<freepost>();
+	//@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
+	@Transient
+	private List<freePost> freepost = new ArrayList<freePost>();
+	
+	// 생성 메서드
+	public static idinfo createId(String id , String password) {
+		idinfo data = new idinfo();
+		data.setId(id);
+		data.setPassword(password);
+		return data;
+	}
 	
 	public void setProfileSetting(profileSetting profileSetting) {
 		this.profileSetting = profileSetting;
@@ -71,11 +79,11 @@ public class idinfo {
 		return profileSetting;
 	}
 
-	public List<freepost> getFreepost() {
+	public List<freePost> getFreepost() {
 		return freepost;
 	}
 
-	public void setFreepost(List<freepost> freepost) {
+	public void setFreepost(List<freePost> freepost) {
 		this.freepost = freepost;
 	}
 	

@@ -16,7 +16,7 @@ public class freePostTagAssociation {
 	// 필수적 비식별 관계
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "POST_NUMBER" , nullable = false)
-	private freepost freepostAssociation;
+	private freePost freepostAssociation;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TAGDATA" , nullable = false)
@@ -26,7 +26,7 @@ public class freePostTagAssociation {
 		return id;
 	}
 
-	public freepost getFreepostAssociation() {
+	public freePost getFreepostAssociation() {
 		return freepostAssociation;
 	}
 
@@ -42,11 +42,11 @@ public class freePostTagAssociation {
 		this.id = number;
 	}
 
-	public freepost getFreepost() {
+	public freePost getFreepost() {
 		return freepostAssociation;
 	}
 
-	public void setFreepost(freepost freepostAssociation) {
+	public void setFreepost(freePost freepostAssociation) {
 		this.freepostAssociation = freepostAssociation;
 	}
 
@@ -66,7 +66,7 @@ public class freePostTagAssociation {
 		this.id = id;
 	}
 
-	public void setFreepostAssociation(freepost freepostAssociation) {
+	public void setFreepostAssociation(freePost freepostAssociation) {
 		this.freepostAssociation = freepostAssociation;
 	}
 

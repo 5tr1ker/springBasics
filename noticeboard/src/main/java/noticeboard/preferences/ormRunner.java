@@ -1,3 +1,6 @@
+/*
+ * DB DDl자동 생성 기능
+ * 
 package noticeboard.preferences;
 
 import javax.persistence.EntityManager;
@@ -13,3 +16,5 @@ public class ormRunner {
         emf.close();
 	}
 }
+
+*/

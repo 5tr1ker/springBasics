@@ -21,13 +21,13 @@ public class freeCommit extends postBaseEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "POST_NUMBER" , nullable = false)
-	private freepost freepost;
+	private freePost freepost;
 
-	public freepost getFreepost() {
+	public freePost getFreepost() {
 		return freepost;
 	}
 
-	public void setFreepost(freepost freepost) {
+	public void setFreepost(freePost freepost) {
 		this.freepost = freepost;
 	}
 

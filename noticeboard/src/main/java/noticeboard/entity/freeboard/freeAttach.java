@@ -16,7 +16,7 @@ public class freeAttach {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false , name="POST_NUMBER")
-	private freepost freepost;
+	private freePost freepost;
 	
 	@Column(nullable = false , length = 30)
 	private String filename;
@@ -36,10 +36,10 @@ public class freeAttach {
 	public void setFile(String file) {
 		this.file = file;
 	}
-	public freepost getFreepost() {
+	public freePost getFreepost() {
 		return freepost;
 	}
-	public void setFreepost(freepost freepost) {
+	public void setFreepost(freePost freepost) {
 		this.freepost = freepost;
 	}
 	public long getId() {

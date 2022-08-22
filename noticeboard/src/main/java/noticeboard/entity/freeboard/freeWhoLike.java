@@ -15,7 +15,7 @@ public class freeWhoLike {
 	
 	@ManyToOne
 	@JoinColumn(name = "POST_NUMBER")
-	private freepost freepost;
+	private freePost freepost;
 	
 	@Column(nullable = false , length = 20)
 	private String recommender;
@@ -28,11 +28,11 @@ public class freeWhoLike {
 		this.id = id;
 	}
 
-	public freepost getFreepost() {
+	public freePost getFreepost() {
 		return freepost;
 	}
 
-	public void setFreepost(freepost freepost) {
+	public void setFreepost(freePost freepost) {
 		this.freepost = freepost;
 	}
 

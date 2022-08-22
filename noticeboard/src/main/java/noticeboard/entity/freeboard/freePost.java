@@ -16,13 +16,14 @@ import javax.persistence.OneToMany;
 import noticeboard.entity.userdata.idinfo;
 // 게시물 데이터
 @Entity
-public class freepost extends postBaseEntity {
+public class freePost extends postBaseEntity {
 
 	@Id @GeneratedValue
-	@Column(name = "NUMBERS")
 	private long numbers;
+	
 	@Column(nullable = false , length = 30)
 	private String title;
+	
 	private int views;
 	private int like;
 	private boolean privates;
