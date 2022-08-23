@@ -10,12 +10,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
 
 import noticeboard.entity.userdata.idinfo;
 // 게시물 데이터
 @Entity
+@JsonIdentityInfo(generator = IntSequenceGenerator.class , property = "id")
 public class freePost extends postBaseEntity {
 
 	@Id @GeneratedValue
@@ -25,25 +30,29 @@ public class freePost extends postBaseEntity {
 	private String title;
 	
 	private int views;
-	private int like;
+	private int likes;
 	private boolean privates;
 	private boolean blockcomm;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_INFO" , nullable = false)
 	private idinfo idinfo;
-	
-	@OneToMany(mappedBy = "freetagAssociation" , fetch = FetchType.LAZY , orphanRemoval = true)
-	private List<freePostTagAssociation> freetag = new ArrayList<freePostTagAssociation>();
-	
+
+	//@OneToMany(mappedBy = "freetagAssociation" , fetch = FetchType.LAZY , orphanRemoval = true)
+	//private List<freePostTagAssociation> freetag = new ArrayList<freePostTagAssociation>();
+	@ManyToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@JoinColumn(name = "TAG_DATA")
+	private List<freeTag> freetag = new ArrayList<freeTag>();
+
 	@OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "freepost" , orphanRemoval = true)
 	private List<freeAttach> freeAttach = new ArrayList<freeAttach>();
-	
+
 	@OneToMany(mappedBy = "freepost" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	private List<freeCommit> freeCommit = new ArrayList<freeCommit>();
-	
+
 	@OneToMany(mappedBy = "freepost" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	private List<freeWhoLike> freewholike = new ArrayList<freeWhoLike>();
+
 	
 	// 연관관계 편의 메소드 시작
 	public void setIdinfo(idinfo idinfo) {
@@ -62,9 +71,9 @@ public class freePost extends postBaseEntity {
 		freeCommit.add(commit);
 		commit.setFreepost(this);
 	}
-	public void addTagAssociation(freePostTagAssociation association) {
-		freetag.add(association);
-		association.setFreepost(this);
+	public void addTagData(freeTag tags) {
+		freetag.add(tags);
+		tags.getFreepost().add(this);
 	}
 	public void addWhoLike(freeWhoLike wholike) {
 		freewholike.add(wholike);
@@ -91,10 +100,10 @@ public class freePost extends postBaseEntity {
 		this.views = views;
 	}
 	public int getLike() {
-		return like;
+		return likes;
 	}
-	public void setLike(int like) {
-		this.like = like;
+	public void setLike(int likes) {
+		this.likes = likes;
 	}
 	public boolean isPrivates() {
 		return privates;
@@ -110,14 +119,6 @@ public class freePost extends postBaseEntity {
 	}
 	public idinfo getIdinfo() {
 		return idinfo;
-	}
-	
-	
-	public List<freePostTagAssociation> getFreetag() {
-		return freetag;
-	}
-	public void setFreetag(List<freePostTagAssociation> freetag) {
-		this.freetag = freetag;
 	}
 	public List<freeAttach> getFreeAttach() {
 		return freeAttach;
@@ -137,6 +138,14 @@ public class freePost extends postBaseEntity {
 	}
 	public void setFreewholike(List<freeWhoLike> wholike) {
 		this.freewholike = wholike;
+	}
+
+	public List<freeTag> getFreetag() {
+		return freetag;
+	}
+
+	public void setFreetag(List<freeTag> freetag) {
+		this.freetag = freetag;
 	}
 	
 

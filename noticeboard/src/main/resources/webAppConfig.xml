@@ -30,7 +30,7 @@
 	
 	    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 	        <property name="dataSource" ref="dataSource"/>
-	        <property name="packagesToScan" value="noticeboard.entity.userdata"/> <!-- @Entity 탐색 시작 위치 -->
+	        <property name="packagesToScan" value="noticeboard.entity"/> <!-- @Entity 탐색 시작 위치 -->
 	        <property name="jpaVendorAdapter">
 	            <!-- 하이버네이트 구현체 사용 -->
 	            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
@@ -39,10 +39,10 @@
 	            <props>
 	                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop> <!-- 방언 -->
                 	<prop key="hibernate.show_sql">true</prop>                   <!-- SQL 보기 -->
-                	<prop key="hibernate.format_sql">true</prop>                 <!-- SQL 정렬해서 보기 -->
-                	<prop key="hibernate.use_sql_comments">true</prop>           <!-- SQL 코멘트 보기 -->
+                	<!--<prop key="hibernate.format_sql">true</prop>                  SQL 정렬해서 보기 -->
+                	<!--<prop key="hibernate.use_sql_comments">true</prop>            SQL 코멘트 보기 -->
                 	<prop key="hibernate.id.new_generator_mappings">true</prop>  <!-- 새 버전의 ID 생성 옵션 -->
-                	<prop key="hibernate.hbm2ddl.auto">validate</prop>             <!-- DDL 자동 생성 -->
+                	<prop key="hibernate.hbm2ddl.auto">update</prop>             <!-- DDL 자동 생성 -->
 	            </props>
 	        </property>
 	    </bean>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import noticeboard.entity.userdata.idinfo;
+import noticeboard.entity.userdata.profileSetting;
 import noticeboard.repository.loginRepository;
 
 @Service
@@ -22,8 +23,9 @@ public class loginService {
 			return -1;
 		}
 		if(!userInfo.get("pw").equals(userInfo.get("checkpw"))) return -2;
-		
+		profileSetting ps = profileSetting.createprofileSetting();
 		idinfo idinfo_data = idinfo.createId(userInfo.get("id"), userInfo.get("pw"));
+		idinfo_data.setProfileSetting(ps);
 		loginRepository.save(idinfo_data);
 		return 1;
 	}
@@ -33,15 +35,19 @@ public class loginService {
 		if(result == null || !result.getPassword().equals(userInfo.get("pw"))) {
 			return -1;
 		}
-		
 		return 1;
 	}
 
-	public String findId(String userinfo) {
-		idinfo result = loginRepository.findOne(userinfo);
+	public String findId(Map<String,String> userinfo) {
+		idinfo result = loginRepository.findOne(userinfo.get("id"));
 		if(result == null) return "-1";
-		
 		String password = result.getPassword();
 		return password.substring( 0 , password.length() - (password.length() - 3));
+	}
+	
+	public profileSetting getProfile(String id) {
+		idinfo data = loginRepository.findOne(id);
+		if(data==null) return null;
+		return data.getProfileSetting();
 	}
 }

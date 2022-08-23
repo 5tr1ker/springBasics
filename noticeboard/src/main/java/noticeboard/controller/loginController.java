@@ -4,11 +4,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import noticeboard.entity.userdata.profileSetting;
 import noticeboard.service.loginService;
 
 @RestController
@@ -29,10 +31,16 @@ public class loginController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/findId" , method = RequestMethod.PUT)
-	public String findId(@RequestBody String userinfo) {
+	@RequestMapping(value = "/findId" , method = RequestMethod.POST)
+	public String findId(@RequestBody Map<String , String> userinfo) {
 		String result = login.findId(userinfo);
 		System.out.println(result);
 		return result;
+	}
+	
+	@RequestMapping(value = "/getprofiledata/{id}" , method = RequestMethod.GET)
+	public profileSetting getprofiledata(@PathVariable("id") String id) {
+		profileSetting ps = login.getProfile(id);
+		return ps;
 	}
 }

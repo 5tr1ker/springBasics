@@ -23,6 +23,13 @@ public class profileSetting {
 	@Column(name = "OPTION2")
 	private int option2;
 	
+	static public profileSetting createprofileSetting() {
+		profileSetting ps = new profileSetting();
+		ps.setOption1(1);
+		ps.setOption2(4);
+		return ps;
+	}
+	
 	public long getProfileNumber() {
 		return profileNumber;
 	}

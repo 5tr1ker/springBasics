@@ -11,6 +11,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @MappedSuperclass
 abstract class postBaseEntity {
+	
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	private Date posttime;

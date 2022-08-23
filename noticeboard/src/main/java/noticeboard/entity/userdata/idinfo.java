@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -31,12 +32,11 @@ public class idinfo {
 	@CreationTimestamp
 	private Date joindate;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PROFILE_SETTING")
+	@OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	@JoinColumn(name = "PROFILE_SETTING" , nullable = false)
 	private profileSetting profileSetting;
-	
-	//@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
-	@Transient
+
+	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	private List<freePost> freepost = new ArrayList<freePost>();
 	
 	// 생성 메서드
@@ -45,6 +45,12 @@ public class idinfo {
 		data.setId(id);
 		data.setPassword(password);
 		return data;
+	}
+	
+	// 연관관계 매핑
+	public void addFreePost(freePost post) {
+		this.freepost.add(post);
+		post.setIdinfo(this);
 	}
 	
 	public void setProfileSetting(profileSetting profileSetting) {

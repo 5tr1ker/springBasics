@@ -5,10 +5,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class freeTag {
@@ -19,13 +18,23 @@ public class freeTag {
 	@Column(nullable = false , length = 15)
 	private String tagData;
 	
-	@OneToMany(mappedBy = "freepostAssociation" , fetch = FetchType.LAZY , orphanRemoval = true)
-	private List<freePostTagAssociation> freepost = new ArrayList<freePostTagAssociation>();
-
+	//@OneToMany(mappedBy = "freepostAssociation" , fetch = FetchType.LAZY , orphanRemoval = true)
+	//private List<freePostTagAssociation> freepost = new ArrayList<freePostTagAssociation>();
+	@ManyToMany(mappedBy = "freetag")
+	private List<freePost> freepost = new ArrayList<freePost>();
+	
 	// 연관관계 편의 메소드
-	public void addFreePost(freePostTagAssociation freepost) {
+	public void addFreePost(freePost freepost) {
 		this.freepost.add(freepost);
-		freepost.setFreetag(this);
+		freepost.getFreetag().add(this);
+	}
+	
+	public freeTag(String tagData) {
+		this.tagData = tagData;
+	}
+	
+	public freeTag() {
+		
 	}
 	
 	public String getTagData() {
@@ -35,13 +44,11 @@ public class freeTag {
 	public void setTagData(String tagData) {
 		this.tagData = tagData;
 	}
-
-	public List<freePostTagAssociation> getFreepost() {
+	public List<freePost> getFreepost() {
 		return freepost;
 	}
 
-	
-	public void setFreepost(List<freePostTagAssociation> freepost) {
+	public void setFreepost(List<freePost> freepost) {
 		this.freepost = freepost;
 	}
 
