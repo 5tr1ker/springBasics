@@ -13,17 +13,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
 
 import noticeboard.entity.userdata.idinfo;
 // 게시물 데이터
 @Entity
+@SequenceGenerator(name = "NUMBERS_SEQUENCE" , sequenceName = "ID_numbers" , initialValue = 1 , allocationSize = 1)
 @JsonIdentityInfo(generator = IntSequenceGenerator.class , property = "id")
 public class freePost extends postBaseEntity {
 
 	@Id @GeneratedValue
+	private long ID_numbers;
+	
+	@Column(nullable = false)
 	private long numbers;
 	
 	@Column(nullable = false , length = 30)
@@ -34,12 +41,11 @@ public class freePost extends postBaseEntity {
 	private boolean privates;
 	private boolean blockcomm;
 	
+	@JsonIgnore // JSON response 에서 제외
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_INFO" , nullable = false)
 	private idinfo idinfo;
 
-	//@OneToMany(mappedBy = "freetagAssociation" , fetch = FetchType.LAZY , orphanRemoval = true)
-	//private List<freePostTagAssociation> freetag = new ArrayList<freePostTagAssociation>();
 	@ManyToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	@JoinColumn(name = "TAG_DATA")
 	private List<freeTag> freetag = new ArrayList<freeTag>();
@@ -146,6 +152,22 @@ public class freePost extends postBaseEntity {
 
 	public void setFreetag(List<freeTag> freetag) {
 		this.freetag = freetag;
+	}
+
+	public long getID_numbers() {
+		return ID_numbers;
+	}
+
+	public void setID_numbers(long iD_numbers) {
+		ID_numbers = iD_numbers;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
 	
 

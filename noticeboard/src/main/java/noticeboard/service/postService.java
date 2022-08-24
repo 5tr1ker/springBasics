@@ -13,21 +13,25 @@ import noticeboard.entity.freeboard.freePost;
 import noticeboard.entity.freeboard.freeTag;
 import noticeboard.entity.userdata.idinfo;
 import noticeboard.repository.loginRepository;
-import noticeboard.repository.writtingRepository;
+import noticeboard.repository.postRepository;
+import noticeboard.repository.tagRepository;
 
 @Service
 @Transactional
-public class writtingService {
+public class postService {
 
-	@Autowired writtingRepository writting;
+	@Autowired postRepository writting;
 	@Autowired loginRepository login;
+	@Autowired tagRepository tag;
 	
 	public int writePost(postdataDTO data) {
+		Integer number = writting.getPostnumber();
 		freePost fp = new freePost();
 		fp.setContent(data.getPostcontent().getContent());
 		fp.setTitle(data.getPostcontent().getTitle());
 		fp.setPrivates(data.getPostoption().isPrivates());
 		fp.setBlockcomm(data.getPostoption().isBlockcomm());
+		fp.setNumbers(number + 1);
 		
 		// String postMode = data.getPostwritemode(); 게시판 종류
 		idinfo idinfo = login.findOne(data.getIdstatus()); // 사용자 아이디
@@ -53,4 +57,16 @@ public class writtingService {
 		List<returnpostDataDTO> result = writting.getPostData();
 		return result;
 	}
+	
+	public List<returnpostDataDTO> getPostViewData(Long postid) {
+		return writting.getViewPostData(postid);
+	}
+	
+	public List<freeTag> getPostTag(Long postid) {
+		Long number = writting.getPostNumber(postid);
+		freePost fp = writting.findPostTag(number);
+		if(fp == null) return null;
+		return fp.getFreetag();
+	}
+
 }

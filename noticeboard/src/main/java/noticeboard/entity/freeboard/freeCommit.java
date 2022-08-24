@@ -22,7 +22,7 @@ public class freeCommit extends postBaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "POST_NUMBER" , nullable = false)
 	private freePost freepost;
-
+	
 	public freePost getFreepost() {
 		return freepost;
 	}

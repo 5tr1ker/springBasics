@@ -21,6 +21,14 @@ abstract class postBaseEntity {
 	@Column(nullable = false , length = 20)
 	private String writer;
 	
+	
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	
 	public Date getPosttime() {
 		return posttime;
 	}
@@ -33,12 +41,7 @@ abstract class postBaseEntity {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getWriter() {
-		return writer;
-	}
-	public void setWriter(String writer) {
-		this.writer = writer;
-	}
+	
 	
 	
 }

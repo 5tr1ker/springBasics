@@ -12,7 +12,27 @@ public class returnpostDataDTO {
 	private Date posttime;
 	private int likes;
 	private int view;
+	/*
+	 * POSTVIEW 전용
+	 */
+	private String content;
+	private boolean blockcomm;
+	private boolean privates;
 	
+	public returnpostDataDTO(long numbers, String title, String writer, Date posttime, int likes, int view,
+			String content, boolean blockcomm, boolean privates) {
+		super();
+		this.numbers = numbers;
+		this.title = title;
+		this.writer = writer;
+		this.posttime = posttime;
+		this.likes = likes;
+		this.view = view;
+		this.content = content;
+		this.blockcomm = blockcomm;
+		this.privates = privates;
+	}
+
 	public returnpostDataDTO(long numbers, String title, String writer, Date posttime, int likes, int view) {
 		this.numbers = numbers;
 		this.title = title;
@@ -34,10 +54,10 @@ public class returnpostDataDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getWriter() {
+	public String getwriter() {
 		return writer;
 	}
-	public void setWriter(String writer) {
+	public void setwriter(String writer) {
 		this.writer = writer;
 	}
 	public Date getPosttime() {
@@ -58,6 +78,22 @@ public class returnpostDataDTO {
 	public void setView(int view) {
 		this.view = view;
 	}
-	
-	
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public boolean isBlockcomm() {
+		return blockcomm;
+	}
+	public void setBlockcomm(boolean blockcomm) {
+		this.blockcomm = blockcomm;
+	}
+	public boolean isPrivates() {
+		return privates;
+	}
+	public void setPrivates(boolean privates) {
+		this.privates = privates;
+	}
 }

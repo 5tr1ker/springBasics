@@ -18,8 +18,6 @@ public class freeTag {
 	@Column(nullable = false , length = 15)
 	private String tagData;
 	
-	//@OneToMany(mappedBy = "freepostAssociation" , fetch = FetchType.LAZY , orphanRemoval = true)
-	//private List<freePostTagAssociation> freepost = new ArrayList<freePostTagAssociation>();
 	@ManyToMany(mappedBy = "freetag")
 	private List<freePost> freepost = new ArrayList<freePost>();
 	

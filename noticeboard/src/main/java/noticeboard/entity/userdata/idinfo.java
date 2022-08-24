@@ -17,9 +17,13 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
+
 import noticeboard.entity.freeboard.freePost;
 
 @Entity
+@JsonIdentityInfo(generator = IntSequenceGenerator.class , property = "id")
 public class idinfo {
 
 	@Id @Column(nullable = false , length = 20)
