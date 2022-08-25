@@ -1,6 +1,7 @@
 package noticeboard.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import noticeboard.entity.DTO.postdataDTO;
 import noticeboard.entity.DTO.returnpostDataDTO;
-import noticeboard.entity.freeboard.freeTag;
 import noticeboard.service.postService;
 
 @RestController
@@ -31,13 +31,33 @@ public class postController {
 		return writtingservice.getfreePost();
 	}
 	
-	@RequestMapping(value = "/selectpost/{postid}")
+	@RequestMapping(value = "/selectpost/{postid}" , method = RequestMethod.GET)
 	public List<returnpostDataDTO> selectpost(@PathVariable("postid") Long postid) {
 		return writtingservice.getPostViewData(postid);
 	}
 	
-	@RequestMapping(value = "/gettag/{postid}")
-	public List<freeTag> getTagCommitData(@PathVariable("postid") Long postid){
+	@RequestMapping(value = "/gettag/{postid}" , method = RequestMethod.GET)
+	public List<String> getTagCommitData(@PathVariable("postid") Long postid){
 		return writtingservice.getPostTag(postid);
+	}
+	
+	@RequestMapping(value = "/updateView/{postid}" , method = RequestMethod.PATCH)
+	public void updateView(@PathVariable("postid") Long postid) {
+		writtingservice.updateview(postid);
+	}
+	
+	@RequestMapping(value = "/likes/{postid}" , method = RequestMethod.PATCH)
+	public int updateLike(@PathVariable("postid") Long postid , @RequestBody Map<String , String> userId) {
+		return writtingservice.updateLike(postid, userId.get("idstatus"));
+	}
+	
+	@RequestMapping(value = "/addcommit" , method = RequestMethod.POST)
+	public int addcommit(@RequestBody Map<String , String> postData) {
+		return writtingservice.AddCommit(postData.get("data") , postData.get("writter") , Long.parseLong(postData.get("postnum")));
+	}
+	
+	@RequestMapping(value = "/deletePost/{postid}" , method = RequestMethod.DELETE)
+	public int deletePost(@PathVariable("postid") Long postid) {
+		return writtingservice.deletePost(postid);
 	}
 }

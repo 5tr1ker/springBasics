@@ -42,7 +42,7 @@ public class freePost extends postBaseEntity {
 	private boolean blockcomm;
 	
 	@JsonIgnore // JSON response 에서 제외
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ID_INFO" , nullable = false)
 	private idinfo idinfo;
 

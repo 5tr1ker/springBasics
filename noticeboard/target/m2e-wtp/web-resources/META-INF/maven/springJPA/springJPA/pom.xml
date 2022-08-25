@@ -83,6 +83,11 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${querydsl.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-core</artifactId>
+            <version>4.3.1</version>
+        </dependency>
 
 		<!-- 스프링 MVC -->
 		<dependency>
@@ -153,7 +158,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring-framework.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -203,7 +207,6 @@
 
 	<build>
 		<plugins>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -227,7 +230,7 @@
 			  <artifactId>maven-war-plugin</artifactId>
 			  <version>3.2.2</version>
 			</plugin>
-<!--
+<!-- 
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
@@ -248,8 +251,9 @@
 			  <artifactId>maven-war-plugin</artifactId>
 			  <version>3.2.2</version>
 			</plugin>
--->
+  -->
 		</plugins>
+		
 	</build>
   
 </project>

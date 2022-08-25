@@ -40,7 +40,7 @@ public class idinfo {
 	@JoinColumn(name = "PROFILE_SETTING" , nullable = false)
 	private profileSetting profileSetting;
 
-	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
+	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.PERSIST , orphanRemoval = true)
 	private List<freePost> freepost = new ArrayList<freePost>();
 	
 	// 생성 메서드

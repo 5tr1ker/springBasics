@@ -9,10 +9,12 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @MappedSuperclass
 abstract class postBaseEntity {
 	
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING , pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Seoul")
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	private Date posttime;

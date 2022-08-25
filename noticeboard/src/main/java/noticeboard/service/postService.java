@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import noticeboard.entity.DTO.postdataDTO;
 import noticeboard.entity.DTO.returnpostDataDTO;
+import noticeboard.entity.freeboard.freeCommit;
 import noticeboard.entity.freeboard.freePost;
 import noticeboard.entity.freeboard.freeTag;
+import noticeboard.entity.freeboard.freeWhoLike;
 import noticeboard.entity.userdata.idinfo;
 import noticeboard.repository.loginRepository;
 import noticeboard.repository.postRepository;
@@ -25,7 +27,7 @@ public class postService {
 	@Autowired tagRepository tag;
 	
 	public int writePost(postdataDTO data) {
-		Integer number = writting.getPostnumber();
+		Long number = writting.getPostnumber();
 		freePost fp = new freePost();
 		fp.setContent(data.getPostcontent().getContent());
 		fp.setTitle(data.getPostcontent().getTitle());
@@ -53,6 +55,46 @@ public class postService {
 		}
 	}
 	
+	public int AddCommit(String content , String writer , Long postid) {
+		try {
+			freeCommit fc = freeCommit.createCommitData(content, writer); // 댓글 내용
+			Long postnum = writting.getPostNumber(postid);
+			freePost fp = writting.findOne(postnum);
+			fp.addFreeCommit(fc);
+		
+			// writting.save(fp); 이미 영속화를 저장하면 fp가 2번 저장됨
+		} catch (Exception e) {
+			System.out.println("Service : postService 에서 오류가 발생했습니다. : " + e);
+			return -1;
+		}
+		return 0;
+	}
+	
+	public int deletePost(Long Postid) {
+		try {
+			Long postnumber = writting.getPostNumber(Postid);
+			writting.delete(postnumber);
+		} catch (Exception e) {
+			return -1;
+		}
+		return 0;
+	}
+	
+	public int updateLike(Long postid , String userName) {
+		if(writting.getRecommender(postid , userName).isEmpty()) {
+			Long postnumber = writting.getPostNumber(postid);
+			freePost fp = writting.getOne(postnumber);
+			fp.setLikes(fp.getLikes() + 1); // 추천 수 증가
+			
+			freeWhoLike wfl = freeWhoLike.makefreeWhoLike(userName, fp);
+			fp.addWhoLike(wfl);
+			
+			return 0;
+		} else {
+			return -2;
+		}
+	}
+	
 	public List<returnpostDataDTO> getfreePost() {
 		List<returnpostDataDTO> result = writting.getPostData();
 		return result;
@@ -62,11 +104,13 @@ public class postService {
 		return writting.getViewPostData(postid);
 	}
 	
-	public List<freeTag> getPostTag(Long postid) {
+	public List<String> getPostTag(Long postid) {
 		Long number = writting.getPostNumber(postid);
-		freePost fp = writting.findPostTag(number);
-		if(fp == null) return null;
-		return fp.getFreetag();
+		return writting.findPostTag(number);
 	}
 
+	public void updateview(Long postid) {
+		Long postnumber = writting.getPostNumber(postid);
+		writting.updatePostViews(postnumber);
+	}
 }

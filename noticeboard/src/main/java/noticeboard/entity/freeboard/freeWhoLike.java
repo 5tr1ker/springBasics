@@ -19,6 +19,13 @@ public class freeWhoLike {
 	
 	@Column(nullable = false , length = 20)
 	private String recommender;
+	
+	static public freeWhoLike makefreeWhoLike(String userId , freePost fp) {
+		freeWhoLike fwl = new freeWhoLike();
+		fwl.setRecommender(userId);
+		fwl.setFreepost(fp);
+		return fwl;
+	}
 
 	public long getId() {
 		return id;

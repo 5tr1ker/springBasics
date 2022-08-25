@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import noticeboard.entity.freeboard.freeCommit;
 
-public interface commitRepository extends JpaRepository<freeCommit, Long>{
-
+public interface commitRepository extends JpaRepository<freeCommit, Long> {
+	
 }
