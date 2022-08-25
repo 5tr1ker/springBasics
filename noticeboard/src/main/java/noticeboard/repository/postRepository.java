@@ -41,4 +41,5 @@ public interface postRepository extends JpaRepository<freePost, Long> , CustomPo
 	@Modifying(clearAutomatically = true) // 영속성 컨텍스트 초기화
 	@Query("UPDATE freePost p set p.views = p.views + 1 where p.ID_numbers = :postid")
 	public Integer updatePostViews(@Param("postid") Long postid);
+	
 }

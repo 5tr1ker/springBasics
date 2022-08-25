@@ -95,6 +95,29 @@ public class postService {
 		}
 	}
 	
+	public int modifiedPost(Long postid , postdataDTO postData) {
+		Long postnumber = writting.getPostNumber(postid);
+		freePost fp = writting.findOne(postnumber);
+		
+		try {
+			fp.setContent(postData.getPostcontent().getContent());
+			fp.setTitle(postData.getPostcontent().getTitle());
+			fp.setBlockcomm(postData.getPostoption().isBlockcomm());
+			fp.setPrivates(postData.getPostoption().isPrivates());
+			
+			fp.getFreetag().clear();
+			String TagData[] = postData.getLabeldata();
+			for(String data : TagData) {
+				freeTag ft = new freeTag(data);
+				fp.addTagData(ft);
+			}
+		} catch (Exception e) {
+			System.out.println("postService modifiedPost 에서 오류가 발생했습니다. " + e);
+			return -1;
+		}
+		return 0;
+	}
+	
 	public List<returnpostDataDTO> getfreePost() {
 		List<returnpostDataDTO> result = writting.getPostData();
 		return result;

@@ -60,4 +60,9 @@ public class postController {
 	public int deletePost(@PathVariable("postid") Long postid) {
 		return writtingservice.deletePost(postid);
 	}
+	
+	@RequestMapping(value = "/modifiedPost/{postid}" , method = RequestMethod.PATCH)
+	public int modifiedPost(@PathVariable("postid") Long postid , @RequestBody postdataDTO postData ) {
+		return writtingservice.modifiedPost(postid, postData);
+	}
 }
