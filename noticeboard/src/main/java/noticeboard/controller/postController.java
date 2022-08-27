@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import noticeboard.entity.DTO.postdataDTO;
 import noticeboard.entity.DTO.returnpostDataDTO;
+import noticeboard.repository.postRepository;
 import noticeboard.service.postService;
 
 @RestController
@@ -20,6 +21,7 @@ import noticeboard.service.postService;
 public class postController {
 	
 	@Autowired postService writtingservice;
+	@Autowired postRepository postRepos;
 	
 	@RequestMapping(value = "/newpost" , method = RequestMethod.POST)
 	public int newpost(@RequestBody postdataDTO postdata) {
@@ -64,5 +66,22 @@ public class postController {
 	@RequestMapping(value = "/modifiedPost/{postid}" , method = RequestMethod.PATCH)
 	public int modifiedPost(@PathVariable("postid") Long postid , @RequestBody postdataDTO postData ) {
 		return writtingservice.modifiedPost(postid, postData);
+	}
+	
+	@RequestMapping(value = "/getTagData/{tagData}" , method = RequestMethod.GET)
+	public List<returnpostDataDTO> getTagData(@PathVariable("tagData") String tagData) {
+		return postRepos.findPostByTagData(tagData);
+	}
+	
+	@RequestMapping(value = "/findPostBySearch/{postContent}" , method = RequestMethod.GET)
+	public List<returnpostDataDTO> findPostBySearch(@PathVariable("postContent") String postContent) {
+		return postRepos.findPostBySearch(postContent);
+	}
+	
+	@RequestMapping(value = "/findPostBySearchAndTag/{postContent}/{tagData}" , method = RequestMethod.GET)
+	public List<returnpostDataDTO> findPostBySearchAndTag(@PathVariable("postContent") String postContent 
+			, @PathVariable("tagData") String tagData) {
+		
+		return postRepos.findPostBySearchAndTag(postContent , tagData);
 	}
 }
