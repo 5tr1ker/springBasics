@@ -33,10 +33,11 @@ public class postService {
 		fp.setTitle(data.getPostcontent().getTitle());
 		fp.setPrivates(data.getPostoption().isPrivates());
 		fp.setBlockcomm(data.getPostoption().isBlockcomm());
-		fp.setNumbers(number + 1);
+		if(number == null) fp.setNumbers(1);
+		else fp.setNumbers(number + 1);
 		
 		// String postMode = data.getPostwritemode(); 게시판 종류
-		idinfo idinfo = login.findOne(data.getIdstatus()); // 사용자 아이디
+		idinfo idinfo = login.findById(data.getIdstatus()); // 사용자 아이디
 		fp.setWriter(idinfo.getId()); // 작성자
 		fp.setIdinfo(idinfo); // 편의 메소드에 접근
 		

@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -17,6 +18,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
 
@@ -26,7 +28,10 @@ import noticeboard.entity.freeboard.freePost;
 @JsonIdentityInfo(generator = IntSequenceGenerator.class , property = "id")
 public class idinfo {
 
-	@Id @Column(nullable = false , length = 20)
+	@Id @GeneratedValue
+	private long idinfo_ID;
+	
+	@Column(nullable = false , length = 20)
 	private String id;
 	
 	@Column(name = "PASSWORD" , nullable = false , length = 45)
@@ -34,13 +39,14 @@ public class idinfo {
 	
 	@Temporal(TemporalType.DATE)
 	@CreationTimestamp
+	@JsonFormat(shape = JsonFormat.Shape.STRING , pattern = "yyyy/MM/dd" , timezone = "Asia/Seoul")
 	private Date joindate;
 	
 	@OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 	@JoinColumn(name = "PROFILE_SETTING" , nullable = false)
 	private profileSetting profileSetting;
 
-	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.PERSIST , orphanRemoval = true)
+	@OneToMany(mappedBy = "idinfo" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	private List<freePost> freepost = new ArrayList<freePost>();
 	
 	// 생성 메서드
@@ -95,6 +101,14 @@ public class idinfo {
 
 	public void setFreepost(List<freePost> freepost) {
 		this.freepost = freepost;
+	}
+
+	public long getIdinfo_ID() {
+		return idinfo_ID;
+	}
+
+	public void setIdinfo_ID(long idinfo_ID) {
+		this.idinfo_ID = idinfo_ID;
 	}
 	
 	

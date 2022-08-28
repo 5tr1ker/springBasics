@@ -25,6 +25,12 @@ public class loginController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/iddelete/{idinfo}" , method = RequestMethod.DELETE)
+	public int iddelete(@PathVariable("idinfo") String userinfo) {
+		int result = login.remove(userinfo);
+		return result;
+	}
+	
 	@RequestMapping(value = "/login" , method = RequestMethod.POST)
 	public int login(@RequestBody Map<String , String> userinfo) {
 		int result = login.login(userinfo);

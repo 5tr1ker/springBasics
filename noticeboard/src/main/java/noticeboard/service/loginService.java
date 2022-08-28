@@ -18,7 +18,7 @@ public class loginService {
 	@Autowired loginRepository loginRepository;
 	
 	public int register(Map<String, String> userInfo) {
-		idinfo result = loginRepository.findOne(userInfo.get("id"));
+		idinfo result = loginRepository.findById(userInfo.get("id"));
 		if(result != null) {
 			return -1;
 		}
@@ -31,7 +31,7 @@ public class loginService {
 	}
 	
 	public int login(Map<String , String> userInfo) {
-		idinfo result = loginRepository.findOne(userInfo.get("id"));
+		idinfo result = loginRepository.findById(userInfo.get("id"));
 		if(result == null || !result.getPassword().equals(userInfo.get("pw"))) {
 			return -1;
 		}
@@ -39,15 +39,22 @@ public class loginService {
 	}
 
 	public String findId(Map<String,String> userinfo) {
-		idinfo result = loginRepository.findOne(userinfo.get("id"));
+		idinfo result = loginRepository.findById(userinfo.get("id"));
 		if(result == null) return "-1";
 		String password = result.getPassword();
 		return password.substring( 0 , password.length() - (password.length() - 3));
 	}
 	
 	public profileSetting getProfile(String id) {
-		idinfo data = loginRepository.findOne(id);
+		idinfo data = loginRepository.findById(id);
 		if(data==null) return null;
 		return data.getProfileSetting();
+	}
+
+	public int remove(String userinfo) {
+		//loginRepository.deleteByUserId(userinfo);
+		idinfo data = loginRepository.findById(userinfo);
+		loginRepository.delete(data);
+		return 0;
 	}
 }
