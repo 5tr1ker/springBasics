@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import noticeboard.entity.DTO.profileDTO;
 import noticeboard.entity.userdata.idinfo;
 import noticeboard.entity.userdata.profileSetting;
+import noticeboard.repository.commitRepository;
 import noticeboard.repository.loginRepository;
+import noticeboard.repository.postRepository;
 import noticeboard.repository.profileRepository;
 
 @Service
@@ -19,6 +21,8 @@ public class profileService {
 	
 	@Autowired profileRepository profileRepos;
 	@Autowired loginRepository loginRepos;
+	@Autowired postRepository postRepos;
+	@Autowired commitRepository commitRepos;
 	
 	public Map<String, String> getProfile(String idinfo) {
 		Long result_totalPost = profileRepos.getTotalPost(idinfo);
@@ -37,7 +41,7 @@ public class profileService {
 	public int updateProfileData(profileDTO data) {
 		String userid = data.getIdstatus();
 		String changeId = data.getInput_profiledata().getUserid();
-		profileSetting st = profileRepos.findprofilesettings(data.getIdstatus());
+		profileSetting st = profileRepos.findprofilesettings(userid);
 		st.setEmail(data.getInput_profiledata().getEmail());
 		st.setPhone(data.getInput_profiledata().getPhone());
 		st.setOption1(data.getInput_profiledata().getOption1());
@@ -45,9 +49,13 @@ public class profileService {
 		if(!userid.equals(changeId)) {
 			idinfo search = loginRepos.findById(changeId);
 			if(search != null) return -2; // 존재하는 아이디
-			idinfo ii = loginRepos.findById(data.getIdstatus()); // 존재하지 않으면 변경
+			idinfo ii = loginRepos.findById(userid); // 존재하지 않으면 변경
 			ii.setId(changeId);
+			postRepos.changeWritter(userid , changeId);
+			commitRepos.changeWritter(userid , changeId);
+			loginRepos.save(ii); // 메소드 이름 찾기는 save 해주어야함
 		}
 		return 0;
-	};
+	}
+	
 }

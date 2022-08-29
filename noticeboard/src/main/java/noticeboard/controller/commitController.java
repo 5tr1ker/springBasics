@@ -27,4 +27,9 @@ public class commitController {
 	public void deletecommit(@PathVariable("commitid") Long commitid) {
 		commit.deleteCommit(commitid);
 	}
+	
+	@RequestMapping(value = "/deleteAllCommit/{idinfo}" , method = RequestMethod.DELETE)
+	public void deleteAllCommit(@PathVariable("idinfo") String idinfo ) {
+		commit.deleteAllCommit(idinfo);
+	}
 }

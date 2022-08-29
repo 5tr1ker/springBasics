@@ -19,7 +19,10 @@ public interface postRepository extends JpaRepository<freePost, Long> , CustomPo
 	 * WhoLike 명단.
 	 */
 	
-	@Query(value = "SELECT new noticeboard.entity.DTO.returnpostDataDTO(f.numbers , f.title , f.writer , f.posttime , f.likes , f.views) FROM freePost f order by f.numbers DESC")
+	//@Query(value = "SELECT new noticeboard.entity.DTO.returnpostDataDTO(f.numbers , f.title , f.writer , f.posttime , f.likes , f.views) FROM freePost f order by f.numbers DESC")
+	//public List<returnpostDataDTO> getPostData();
+	
+	@Query(value = "SELECT new noticeboard.entity.DTO.returnpostDataDTO(f.numbers , f.title , f.writer , f.posttime , f.likes , f.views , COUNT(c)) FROM freePost f LEFT OUTER JOIN f.freeCommit c group by f.numbers order by f.numbers DESC")
 	public List<returnpostDataDTO> getPostData();
 	
 	/* Post 번호 증감식 */
@@ -42,8 +45,9 @@ public interface postRepository extends JpaRepository<freePost, Long> , CustomPo
 	@Query("UPDATE freePost p set p.views = p.views + 1 where p.ID_numbers = :postid")
 	public Integer updatePostViews(@Param("postid") Long postid);
 
-	
-
-	
+	/* 수정된 아이디로 전부 변경 */
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE freePost p set p.writer = :changeid where p.writer = :idstatus")
+	public void changeWritter(@Param("idstatus") String idstatus , @Param("changeid") String changeid);
 	
 }

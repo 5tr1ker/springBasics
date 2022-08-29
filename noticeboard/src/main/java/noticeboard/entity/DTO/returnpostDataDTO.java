@@ -12,6 +12,7 @@ public class returnpostDataDTO {
 	private Date posttime;
 	private int likes;
 	private int view;
+	private Long count;
 	/*
 	 * POSTVIEW 전용
 	 */
@@ -19,6 +20,7 @@ public class returnpostDataDTO {
 	private boolean blockcomm;
 	private boolean privates;
 	
+	/* postview */
 	public returnpostDataDTO(long numbers, String title, String writer, Date posttime, int likes, int view,
 			String content, boolean blockcomm, boolean privates) {
 		super();
@@ -32,14 +34,26 @@ public class returnpostDataDTO {
 		this.blockcomm = blockcomm;
 		this.privates = privates;
 	}
-
+	
+	/* 검색 전용 */
 	public returnpostDataDTO(long numbers, String title, String writer, Date posttime, int likes, int view) {
 		this.numbers = numbers;
 		this.title = title;
 		this.writer = writer;
 		this.posttime = posttime;
 		this.likes = likes;
+		this.view = view; 
+	}
+
+	/* 목록 전용 */
+	public returnpostDataDTO(long numbers, String title, String writer, Date posttime, int likes, int view , Long count) {
+		this.numbers = numbers;
+		this.title = title;
+		this.writer = writer;
+		this.posttime = posttime;
+		this.likes = likes;
 		this.view = view;
+		this.count= count; 
 	}
 	
 	public long getNumbers() {
@@ -96,4 +110,12 @@ public class returnpostDataDTO {
 	public void setPrivates(boolean privates) {
 		this.privates = privates;
 	}
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(Long count) {
+		this.count = count;
+	}
+	
 }

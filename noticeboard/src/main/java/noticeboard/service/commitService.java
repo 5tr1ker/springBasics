@@ -25,4 +25,8 @@ public class commitService {
 	public void deleteCommit(Long commitid) {
 		commit.delete(commitid);
 	}
+	
+	public void deleteAllCommit(String idinfo) {
+		commit.deleteAllCommit(idinfo);
+	}
 }
