@@ -29,7 +29,7 @@ public class postRepositoryImpl extends QueryDslRepositorySupport implements Cus
 		
 		JPQLQuery query = from(qfp);
 		
-		return query.distinct().join(qfp.freeCommit , qcm).where(qfp.numbers.eq(postid)).list(qcm);
+		return query.distinct().join(qfp.freeCommit , qcm).where(qfp.numbers.eq(postid)).orderBy(qcm.id.desc()).list(qcm);
 	}
 	
 	@Override

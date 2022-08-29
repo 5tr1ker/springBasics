@@ -55,7 +55,7 @@ public class postController {
 	
 	@RequestMapping(value = "/addcommit" , method = RequestMethod.POST)
 	public int addcommit(@RequestBody Map<String , String> postData) {
-		return writtingservice.AddCommit(postData.get("data") , postData.get("writter") , Long.parseLong(postData.get("postnum")));
+		return writtingservice.AddCommit(postData.get("data") , postData.get("writter") , Long.parseLong(postData.get("postnum")) , Long.parseLong(postData.get("postNumber")) , postData.get("posttype") );
 	}
 	
 	@RequestMapping(value = "/deletePost/{postid}" , method = RequestMethod.DELETE)
@@ -81,7 +81,8 @@ public class postController {
 	@RequestMapping(value = "/findPostBySearchAndTag/{postContent}/{tagData}" , method = RequestMethod.GET)
 	public List<returnpostDataDTO> findPostBySearchAndTag(@PathVariable("postContent") String postContent 
 			, @PathVariable("tagData") String tagData) {
-		
 		return postRepos.findPostBySearchAndTag(postContent , tagData);
 	}
+	
+	
 }

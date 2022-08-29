@@ -49,5 +49,4 @@ public interface postRepository extends JpaRepository<freePost, Long> , CustomPo
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE freePost p set p.writer = :changeid where p.writer = :idstatus")
 	public void changeWritter(@Param("idstatus") String idstatus , @Param("changeid") String changeid);
-	
 }

@@ -56,9 +56,9 @@ public class postService {
 		}
 	}
 	
-	public int AddCommit(String content , String writer , Long postid) {
+	public int AddCommit(String content , String writer , Long postid , Long postnumber , String postType) {
 		try {
-			freeCommit fc = freeCommit.createCommitData(content, writer); // 댓글 내용
+			freeCommit fc = freeCommit.createCommitData(content, writer , postnumber , postType); // 댓글 내용
 			Long postnum = writting.getPostNumber(postid);
 			freePost fp = writting.findOne(postnum);
 			fp.addFreeCommit(fc);

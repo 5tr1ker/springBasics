@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import noticeboard.entity.freeboard.freeCommit;
+import noticeboard.repository.commitRepository;
 import noticeboard.service.commitService;
 
 @RestController
@@ -17,6 +18,7 @@ import noticeboard.service.commitService;
 public class commitController {
 
 	@Autowired commitService commit;
+	@Autowired commitRepository commitRepos;
 	
 	@RequestMapping(value = "/getcommit/{postid}" , method = RequestMethod.GET )
 	public List<freeCommit> getcommit(@PathVariable("postid") Long postid) {
@@ -31,5 +33,10 @@ public class commitController {
 	@RequestMapping(value = "/deleteAllCommit/{idinfo}" , method = RequestMethod.DELETE)
 	public void deleteAllCommit(@PathVariable("idinfo") String idinfo ) {
 		commit.deleteAllCommit(idinfo);
+	}
+	
+	@RequestMapping(value = "/getNotifice/{idinfo}" , method = RequestMethod.GET)
+	public List<freeCommit> getNotifice(@PathVariable("idinfo") String idinfo) {
+		return commitRepos.getNotifice(idinfo);
 	}
 }
