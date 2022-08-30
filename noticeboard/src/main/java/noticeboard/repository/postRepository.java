@@ -49,4 +49,7 @@ public interface postRepository extends JpaRepository<freePost, Long> , CustomPo
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE freePost p set p.writer = :changeid where p.writer = :idstatus")
 	public void changeWritter(@Param("idstatus") String idstatus , @Param("changeid") String changeid);
+
+	@Query("SELECT p.filename from freeAttach p where p.changedFile = :postRepos")
+	public String getFileName(@Param("postRepos")String fileName);
 }

@@ -26,6 +26,7 @@
 			<param-value>
 				classpath:webAppConfig.xml
 				classpath:controllerConf.xml
+				classpath:context-common.xml
 				<!--
 				noticeboard.preferences.controllerConf
 				

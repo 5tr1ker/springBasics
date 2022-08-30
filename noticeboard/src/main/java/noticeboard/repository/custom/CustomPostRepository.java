@@ -3,7 +3,9 @@ package noticeboard.repository.custom;
 import java.util.List;
 
 import noticeboard.entity.DTO.returnpostDataDTO;
+import noticeboard.entity.freeboard.freeAttach;
 import noticeboard.entity.freeboard.freeCommit;
+import noticeboard.entity.freeboard.freePost;
 import noticeboard.entity.freeboard.freeWhoLike;
 
 public interface CustomPostRepository {
@@ -13,4 +15,6 @@ public interface CustomPostRepository {
 	List<returnpostDataDTO> findPostByTagData(String tagData);
 	List<returnpostDataDTO> findPostBySearch(String postContent);
 	List<returnpostDataDTO> findPostBySearchAndTag(String postContent, String tagData);
+	freePost findPostByNumbers(Long postnumber);
+	List<freeAttach> getAttachment(Long postid);
 }

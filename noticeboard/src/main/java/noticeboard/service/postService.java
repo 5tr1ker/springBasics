@@ -1,5 +1,6 @@
 package noticeboard.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -26,7 +27,9 @@ public class postService {
 	@Autowired loginRepository login;
 	@Autowired tagRepository tag;
 	
-	public int writePost(postdataDTO data) {
+	public HashMap<String, Long> writePost(postdataDTO data) {
+		HashMap<String, Long> result = new HashMap<String, Long>();
+		
 		Long number = writting.getPostnumber();
 		freePost fp = new freePost();
 		fp.setContent(data.getPostcontent().getContent());
@@ -36,6 +39,7 @@ public class postService {
 		if(number == null) fp.setNumbers(1);
 		else fp.setNumbers(number + 1);
 		
+		result.put("postNumber" , fp.getNumbers());
 		// String postMode = data.getPostwritemode(); 게시판 종류
 		idinfo idinfo = login.findById(data.getIdstatus()); // 사용자 아이디
 		fp.setWriter(idinfo.getId()); // 작성자
@@ -50,9 +54,11 @@ public class postService {
 			writting.save(fp);
 			idinfo.addFreePost(fp);
 			login.save(idinfo);
-			return 0;
+			result.put("result" , 0L);
+			return result;
 		} catch(Exception e) {
-			return -1;
+			result.put("result" , -1L);
+			return result;
 		}
 	}
 	

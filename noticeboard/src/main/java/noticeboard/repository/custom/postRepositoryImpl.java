@@ -12,6 +12,7 @@ import noticeboard.entity.freeboard.QfreeCommit;
 import noticeboard.entity.freeboard.QfreePost;
 import noticeboard.entity.freeboard.QfreeTag;
 import noticeboard.entity.freeboard.QfreeWhoLike;
+import noticeboard.entity.freeboard.freeAttach;
 import noticeboard.entity.freeboard.freeCommit;
 import noticeboard.entity.freeboard.freePost;
 import noticeboard.entity.freeboard.freeWhoLike;
@@ -69,5 +70,23 @@ public class postRepositoryImpl extends QueryDslRepositorySupport implements Cus
 		JPQLQuery query = from(qfm);
 		return query.join(qfm.freepost , qfp).where(qfm.tagData.eq(tagData).and(qfp.content.contains(postContent).or(qfp.title.contains(postContent)))).list(Projections.constructor(
 				returnpostDataDTO.class	, qfp.numbers , qfp.title , qfp.writer , qfp.posttime , qfp.likes , qfp.views )) ;
+	}
+	
+	@Override
+	public freePost findPostByNumbers(Long postnumber) {
+		QfreePost fp = QfreePost.freePost;
+		
+		JPQLQuery query = from(fp);
+		return query.where(fp.numbers.eq(postnumber)).uniqueResult(fp);
+	}
+	
+	@Override
+	public List<freeAttach> getAttachment(Long postid) {
+		QfreePost qfp = QfreePost.freePost;
+		
+		JPQLQuery query = from(qfp);
+		freePost result = query.where(qfp.numbers.eq(postid)).join(qfp.freeAttach).fetch().uniqueResult(qfp);
+		if (result == null) return null;
+		return result.getFreeAttach();
 	}
 }
