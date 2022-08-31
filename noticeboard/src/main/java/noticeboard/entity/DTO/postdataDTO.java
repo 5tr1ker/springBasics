@@ -6,6 +6,7 @@ public class postdataDTO {
 	private String postwritemode; // 작성된 포스트
 	private postoption postoption;	// 글 옵션
 	private postcontent postcontent; // 글 내용
+	private String[] deletedfilelist; // 삭제된 파일
 	
 	public class postoption {
 		private boolean blockcomm;
@@ -83,6 +84,14 @@ public class postdataDTO {
 
 	public void setPostcontent(postcontent postcontent) {
 		this.postcontent = postcontent;
+	}
+
+	public String[] getDeletedfilelist() {
+		return deletedfilelist;
+	}
+
+	public void setDeletedfilelist(String[] deletedfilelist) {
+		this.deletedfilelist = deletedfilelist;
 	}
 	
 	

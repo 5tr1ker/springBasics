@@ -103,6 +103,8 @@ public class postService {
 	}
 	
 	public int modifiedPost(Long postid , postdataDTO postData) {
+		
+		
 		Long postnumber = writting.getPostNumber(postid);
 		freePost fp = writting.findOne(postnumber);
 		

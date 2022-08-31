@@ -52,4 +52,8 @@ public interface postRepository extends JpaRepository<freePost, Long> , CustomPo
 
 	@Query("SELECT p.filename from freeAttach p where p.changedFile = :postRepos")
 	public String getFileName(@Param("postRepos")String fileName);
+
+	@Modifying(clearAutomatically = true)
+	@Query("DELETE from freeAttach a where a.changedFile = :name")
+	public void deleteByFileName(@Param("name") String name);
 }

@@ -46,10 +46,10 @@ public class postController {
 		attach.upload(file , postnumber);
 	}
 	
-	@RequestMapping(value = "/modifieduploadData/{postnumber}" , method = RequestMethod.POST)
-	public void modifieduploadData(@RequestPart List<MultipartFile> file , @PathVariable("postnumber")Long postnumber) {
-		attach.modifiedupload(file , postnumber);
-	}
+//	@RequestMapping(value = "/modifieduploadData/{postnumber}" , method = RequestMethod.POST)
+//	public void modifieduploadData(@RequestPart List<MultipartFile> file , @PathVariable("postnumber")Long postnumber) {
+//		attach.modifiedupload(file , postnumber);
+//	}
 	
 	@RequestMapping(value = "/getfreepost" , method = RequestMethod.GET)
 	public List<returnpostDataDTO> getfreepost() {
@@ -93,6 +93,7 @@ public class postController {
 	
 	@RequestMapping(value = "/modifiedPost/{postid}" , method = RequestMethod.PATCH)
 	public int modifiedPost(@PathVariable("postid") Long postid , @RequestBody postdataDTO postData ) {
+		attach.modifiedupload(postData.getDeletedfilelist() , postid);
 		return writtingservice.modifiedPost(postid, postData);
 	}
 	
