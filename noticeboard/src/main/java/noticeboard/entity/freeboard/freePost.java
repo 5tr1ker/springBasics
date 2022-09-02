@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
@@ -26,7 +25,7 @@ import noticeboard.entity.userdata.idinfo;
 @SequenceGenerator(name = "NUMBERS_SEQUENCE" , sequenceName = "ID_numbers" , initialValue = 1 , allocationSize = 1)
 @JsonIdentityInfo(generator = IntSequenceGenerator.class , property = "id")
 public class freePost extends postBaseEntity {
-
+	
 	@Id @GeneratedValue
 	private long ID_numbers;
 	

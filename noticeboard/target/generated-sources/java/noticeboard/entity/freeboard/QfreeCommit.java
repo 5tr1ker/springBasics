@@ -31,8 +31,12 @@ public class QfreeCommit extends EntityPathBase<freeCommit> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final NumberPath<Long> postnumber = createNumber("postnumber", Long.class);
+
     //inherited
     public final DateTimePath<java.util.Date> posttime = _super.posttime;
+
+    public final StringPath posttype = createString("posttype");
 
     //inherited
     public final StringPath writer = _super.writer;

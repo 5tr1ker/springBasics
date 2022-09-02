@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,6 +28,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
 import noticeboard.entity.freeboard.freePost;
 
 @Entity
+@Cacheable
 @JsonIdentityInfo(generator = IntSequenceGenerator.class , property = "id")
 public class idinfo {
 
@@ -42,6 +46,7 @@ public class idinfo {
 	@JsonFormat(shape = JsonFormat.Shape.STRING , pattern = "yyyy/MM/dd" , timezone = "Asia/Seoul")
 	private Date joindate;
 	
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 	@JoinColumn(name = "PROFILE_SETTING" , nullable = false)
 	private profileSetting profileSetting;

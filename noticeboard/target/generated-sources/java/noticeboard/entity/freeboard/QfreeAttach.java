@@ -22,9 +22,11 @@ public class QfreeAttach extends EntityPathBase<freeAttach> {
 
     public static final QfreeAttach freeAttach = new QfreeAttach("freeAttach");
 
-    public final StringPath file = createString("file");
+    public final StringPath changedFile = createString("changedFile");
 
     public final StringPath filename = createString("filename");
+
+    public final NumberPath<Long> fileSize = createNumber("fileSize", Long.class);
 
     public final QfreePost freepost;
 

@@ -26,6 +26,8 @@ public class Qidinfo extends EntityPathBase<idinfo> {
 
     public final StringPath id = createString("id");
 
+    public final NumberPath<Long> idinfo_ID = createNumber("idinfo_ID", Long.class);
+
     public final DatePath<java.util.Date> joindate = createDate("joindate", java.util.Date.class);
 
     public final StringPath password = createString("password");

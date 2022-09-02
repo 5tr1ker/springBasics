@@ -179,6 +179,11 @@
 			 <version>1.2.2</version>
 		 </dependency>
 
+		 <dependency>
+		 	<groupId>org.hibernate</groupId>
+		 	<artifactId>hibernate-ehcache</artifactId>
+		 	<version>4.3.10.Final</version>
+		 </dependency>
 	</dependencies>
 
 	<!-- Spring Data JPA 1.8이 스프링 4.0.9에 의존관계를 가지므로 스프링 버전을 직접 관리한다. -->
@@ -264,7 +269,7 @@
 			  <artifactId>maven-war-plugin</artifactId>
 			  <version>3.2.2</version>
 			</plugin>
-  -->
+   -->
 		</plugins>
 		
 	</build>

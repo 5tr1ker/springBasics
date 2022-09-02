@@ -89,4 +89,5 @@ public class postRepositoryImpl extends QueryDslRepositorySupport implements Cus
 		if (result == null) return null;
 		return result.getFreeAttach();
 	}
+	
 }
